@@ -38,22 +38,13 @@
         </main>
     </div>
 
-    <!-- 載入外部獨立資料庫 -->
-    <!-- 載入各科目獨立模組與中央整合庫 -->
+    <!-- 載入所有模組化資料檔案 -->
     <script src="colregs.js"></script>
     <script src="nav.js"></script>
     <script src="safety.js"></script>
     <script src="english.js"></script>
     <script src="cargo.js"></script>
     <script src="management.js"></script>
-    <script src="database.js"></script>
-
-    <script>
-        // 前台邏輯保持不變...
-        let currentCat = 'nav';
-        let currentFilter = 'all';
-        // ... (其餘邏輯同前)
-    </script>
     <script src="database.js"></script>
 
     <script>
@@ -91,17 +82,19 @@
         }
 
         function renderCurrentView() {
+            if (!window.db) return;
+
             if (currentCat === 'colregs') {
-                let rules = window.db.colregs;
+                let rules = window.db.colregs || [];
                 if (currentFilter === 'important') {
                     rules = rules.filter(r => r.level === 'important');
                 } else if (currentFilter === 'secondary') {
                     rules = rules.filter(r => r.level === 'secondary');
                 }
                 renderCOLREGs(rules);
-            } else if (window.db && window.db[currentCat]) {
+            } else if (window.db[currentCat]) {
                 const activeData = window.db[currentCat];
-                renderData(activeData.terms, activeData.quizzes, activeData.title);
+                renderData(activeData.terms || [], activeData.quizzes || [], activeData.title || '');
             }
         }
 
@@ -199,14 +192,14 @@
             }
 
             if (currentCat === 'colregs') {
-                const matched = window.db.colregs.filter(r => r.rule.toLowerCase().includes(kw) || r.title.toLowerCase().includes(kw) || r.zh.toLowerCase().includes(kw) || r.en.toLowerCase().includes(kw));
+                const matched = (window.db.colregs || []).filter(r => r.rule.toLowerCase().includes(kw) || r.title.toLowerCase().includes(kw) || r.zh.toLowerCase().includes(kw) || r.en.toLowerCase().includes(kw));
                 renderCOLREGs(matched);
             } else {
                 const activeData = window.db[currentCat];
                 if (!activeData) return;
 
-                const matchedTerms = activeData.terms.filter(t => t.zh.toLowerCase().includes(kw) || t.en.toLowerCase().includes(kw) || t.desc.toLowerCase().includes(kw));
-                const matchedQuizzes = activeData.quizzes.filter(q => q.q.toLowerCase().includes(kw) || q.options.some(o => o.toLowerCase().includes(kw)));
+                const matchedTerms = (activeData.terms || []).filter(t => t.zh.toLowerCase().includes(kw) || t.en.toLowerCase().includes(kw) || t.desc.toLowerCase().includes(kw));
+                const matchedQuizzes = (activeData.quizzes || []).filter(q => q.q.toLowerCase().includes(kw) || q.options.some(o => o.toLowerCase().includes(kw)));
 
                 renderData(matchedTerms, matchedQuizzes, `${activeData.title} - 檢索結果`);
             }
