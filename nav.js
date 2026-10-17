@@ -1,16 +1,105 @@
 window.navData = {
-    title: "科目一：航海學 (Navigation) - 觀念與公式專題庫",
+    title: "科目一：航海學 (Navigation) - 基礎知識與核心公式專題庫",
     terms: [
-        // --- 1. 地球航海與海圖觀念 (Geonavigation & Charts) ---
+        // --- 一、 基礎地理與航海座標觀念 (Fundamental Concepts) ---
+        { 
+            en: "Latitude (Lat)", 
+            zh: "緯度", 
+            desc: "地面上一點之鉛垂線與赤道面之夾角。由赤道向南北兩極量測，從 00° 至 90° N 或 S。1分（Minute）之緯度弧長約等於 1 海浬（Nautical Mile）。" 
+        },
+        { 
+            en: "Longitude (Long)", 
+            zh: "經度", 
+            desc: "通過本初子午線（格林威治子午線，000°）與當地子午線之二面角。由本初子午線向東或向西量測，從 000° 至 180° E 或 W。" 
+        },
+        { 
+            en: "Equator", 
+            zh: "赤道", 
+            desc: "垂直於地軸並平分地球為南北半球之大圓，緯度定為 00° 00'，是所有緯度量測的基準面。" 
+        },
+        { 
+            en: "Prime Meridian", 
+            zh: "本初子午線 (格林威治子午線)", 
+            desc: "通過英國格林威治天文台舊址之子午線，經度定為 000° 00'，為全球經度與格林威治時（GMT/UT）之計算基準。" 
+        },
+        { 
+            en: "Vernal Equinox (First Point of Aries)", 
+            zh: "春分點 (白羊宮第一點)", 
+            desc: "太陽由南半球向北半球運行跨越天赤道之交點（符號 ♈）。在天文航海中被用作量測恆星時角與定位之絕對基準點。" 
+        },
+        { 
+            en: "Course / Heading / Track", 
+            zh: "航向、艏向與航跡", 
+            desc: "Heading（艏向）：船艏指向；Course（航向）：預定航行之方向；Track（航跡）：船舶實際走過之軌跡。三者常因風流影響而有差異。" 
+        },
+        { 
+            en: "Meridian Angle (t)", 
+            zh: "子午角", 
+            desc: "天體子午圈與觀測者當地子午圈較小之夾角。由當地子午線向東或向西量測，從 0° 至 180° E 或 W（常記為 t E 或 t W）。" 
+        },
+        { 
+            en: "Greenwich Hour Angle (GHA)", 
+            zh: "格林威治時角", 
+            desc: "天體自本初子午線向西量至天體子午圈之角度（0° 至 360°）。可由航海曆直接查得。" 
+        },
+        { 
+            en: "Local Hour Angle (LHA)", 
+            zh: "地方時角", 
+            desc: "天體自觀測者當地子午線向西量至天體子午圈之角度。公式：LHA = GHA +/- 經度（東加西減）。" 
+        },
+        { 
+            en: "Declination (Dec)", 
+            zh: "赤緯", 
+            desc: "天體中心至天赤道之角距離，相當於天體的緯度。由天赤道向南北量測（0° 至 90° N 或 S）。" 
+        },
+
+        // --- 二、 航海學核心計算公式專區 (Core Formulas Collection) ---
+        { 
+            en: "Formula: Compass Error (罗经差公式)", 
+            zh: "【公式】羅經差計算", 
+            desc: "計算邏輯：羅經差 (CE) = 磁偏角 (Var) + 自差 (Dev)。\n應用換算：真方位 (T) = 羅方位 (C) + 羅經差 (CE)。\n記憶口訣：Cadet (C) + Dev = Magnetic (M), M + Var = True (T)（向東為正 East+, 向西為負 West-）。" 
+        },
+        { 
+            en: "Formula: Departure & Difference of Longitude", 
+            zh: "【公式】東西距與經差計算", 
+            desc: "東西距（Departure, p）與經差（dLo）之關係公式：\n1. p = dLo * cos(Lat) （p的單位為海浬，dLo為分）。\n2. 均緯度平面航法中：p = dLo * cos(mLat)，其中 mLat 為兩地平均緯度。" 
+        },
+        { 
+            en: "Formula: Plane Sailing (平面航法公式)", 
+            zh: "【公式】平面航法基本關係", 
+            desc: "已知航程（Dist）與航向（C）：\n1. 緯差 (dLat) = Dist * cos(C)\n2. 東西距 (Departure) = Dist * sin(C)\n3. 航向切值 (tan C) = Departure / dLat" 
+        },
+        { 
+            en: "Formula: Great Circle Distance (大圓航法距離)", 
+            zh: "【公式】大圓航法距離公式", 
+            desc: "已知兩點緯度（L1, L2）與經差（dLo）：\ncos(D) = sin(L1)*sin(L2) + cos(L1)*cos(L2)*cos(dLo)\n（其中 D 為大圓弧角，乘以 60 即為兩地間之最短距離海浬數）。" 
+        },
+        { 
+            en: "Formula: Great Circle Vertex (大圓頂點緯度)", 
+            zh: "【公式】大圓航線頂點緯度", 
+            desc: "計算大圓航線最高緯度（Vertex Lat, Lv）與起點航向（C1）：\ncos(Lv) = cos(L1) * sin(C1)\n（頂點處之航向恰為 090° 或 270°）。" 
+        },
+        { 
+            en: "Formula: Intercept Method Altitude Difference", 
+            zh: "【公式】截距法高度差 (a)", 
+            desc: "天文定位高度差計算：\n截距 (a) = 觀測高度 (Ho) - 計算高度 (Hc)\n判斷法則：若 Ho > Hc，截距方向為「向著」（Towards）天體方位；若 Ho < Hc，則為「背離」（Away）。" 
+        },
+        { 
+            en: "Formula: Computed Altitude (計算高度 Hc)", 
+            zh: "【公式】天文計算高度球面三角公式", 
+            desc: "利用假設船位計算高度：\nsin(Hc) = sin(aLat)*sin(Dec) + cos(aLat)*cos(Dec)*cos(LHA)\n（aLat 為假設緯度，Dec 為赤緯，LHA 為地方時角）。" 
+        },
+        { 
+            en: "Formula: Meridian Altitude Latitude (中天求緯度)", 
+            zh: "【公式】中天高度求緯度", 
+            desc: "當天體通過當地子午圈（LHA = 0° 或 180°）時：\n緯度 (Lat) = (90° - Ho) +/- Dec\n（依天體位於觀測者南北側與赤緯同異名決定加減）。" 
+        },
+
+        // --- 三、 海圖與儀器觀念 (Charts & Instruments) ---
         { 
             en: "Mercator Chart", 
             zh: "漸長分海圖 (墨卡托海圖)", 
-            desc: "將球形地球投影於圓筒上的正角投影海圖。等角航線（Rhumb line）在圖上為直線。緯度漸長率（Mercator Sailing / Latitude Factors）使緯度越高比例尺放大越大。" 
-        },
-        { 
-            en: "Rhumb Line", 
-            zh: "等角航線", 
-            desc: "在地球表面與所有子午線（Meridians）相交角度均相同的曲線。在墨卡托海圖上呈現為直線，方便航手定向航行，但距離並非最短。" 
+            desc: "將球形地球投影於圓筒上的正角投影海圖。等角航線（Rhumb line）在圖上為直線，緯度愈高比例尺放大愈大。" 
         },
         { 
             en: "Meridional Parts (M)", 
@@ -18,141 +107,19 @@ window.navData = {
             desc: "自赤道至某一緯度間，在墨卡托海圖上所代表之赤道分緯度單位數。公式：M = 7915.7044 * log10(tan(45° + Lat/2)) - 22.984 * sin(Lat)。" 
         },
         { 
-            en: "Compass Error (CE)", 
-            zh: "羅經差", 
-            desc: "磁偏角（Var）與自差（Dev）之代數和。計算公式：CE = Var + Dev。真方位(T) = 羅方位(C) + CE（East為正，West為負；口訣：Cadet Nullify True Virgins = C + Dev = M, M + Var = T）。" 
+            en: "ECDIS / ENC", 
+            zh: "電子海圖顯示與資訊系統 / 向量海圖", 
+            desc: "符合 IMO 規範之標準數位海圖系統，使用官方發行之 ENC 向量海圖，具備自動避礁與即時告警功能。" 
         },
         { 
-            en: "Variation (Var)", 
-            zh: "磁偏角", 
-            desc: "真北（True North）與磁北（Magnetic North）之間的夾角。由地球磁場分佈決定，隨地理位置與年份（Annual Change）變化，記載於海圖羅經花（Compass Rose）上。" 
-        },
-        { 
-            en: "Deviation (Dev)", 
-            zh: "自差", 
-            desc: "磁北（Magnetic North）與磁羅經北（Compass North）之間的夾角。由船體鋼鐵磁化及電磁設備影響產生，隨船向（Ship's Heading）變化，記錄於自差表（Dev Card）。" 
-        },
-
-        // --- 2. 航法與距離計算公式 (Sailings & Formulas) ---
-        { 
-            en: "Great Circle Sailing", 
-            zh: "大圓航法", 
-            desc: "沿通過地心之大圓平面切地球表面所得弧線航行。兩點間距離最短，但航向隨時在變。大圓距離公式：cos(D) = sin(L1)*sin(L2) + cos(L1)*cos(L2)*cos(dLo)。" 
-        },
-        { 
-            en: "Vertex of Great Circle", 
-            zh: "大圓頂點", 
-            desc: "大圓航線上海拔緯度最高（最接近極點）之點，該點航向恰為 090° 或 270°。頂點緯度公式：cos(Lv) = cos(L1) * sin(C1)。" 
-        },
-        { 
-            en: "Composite Sailing", 
-            zh: "混合航法", 
-            desc: "當大圓航線通過高緯度冰山危險區時，限制最高航行緯度（Lat Limit），結合大圓航線與平行航線（Parallel Sailing）之綜合航線。" 
-        },
-        { 
-            en: "Plane Sailing", 
-            zh: "平面航法", 
-            desc: "將小範圍地球表面視為平面進行之計算航法。公式：Departure (p) = Dist * sin(C)；dLat (l) = Dist * cos(C)；p = dLo * cos(mLat)。" 
-        },
-        { 
-            en: "Departure (p)", 
-            zh: "東西距 / 離緯距", 
-            desc: "兩子午線間沿某一緯線測得之平行圈弧長，單位為海浬。公式：p = dLo * cos(Lat)（dLo 為經差度數轉分）。" 
-        },
-
-        // --- 3. 航跡、風流與位置推算 (DR & Wind/Current) ---
-        { 
-            en: "Dead Reckoning (DR)", 
-            zh: "推算船位", 
-            desc: "僅依據已知前一確切船位（Fix）、艏向航向（HDG）與水上船速（STW）推算之船位，完全不考量風壓差（Leeway）與水流（Current）影響。" 
-        },
-        { 
-            en: "Estimated Position (EP)", 
-            zh: "估計船位", 
-            desc: "在推算船位 (DR) 之基礎上，加上估算之風壓差（Leeway Angle）與水流方向/流速（Set & Drift）修正後所得之船位。" 
-        },
-        { 
-            en: "Set and Drift", 
-            zh: "流向與流速", 
-            desc: "Set 為水流流去的真方向（True direction toward which current flows）；Drift 為水流強度/速度（海浬/小時 Knots）。" 
-        },
-        { 
-            en: "Leeway Angle", 
-            zh: "風壓角", 
-            desc: "風力吹襲船體受風面導致船體偏離原航向之夾角。船隻實際對水航向（CMG through water）= 艏向 ± 風壓角。" 
-        },
-
-        // --- 4. 天文航海學 (Celestial Navigation) ---
-        { 
-            en: "Intercept Method (Marcq St. Hilaire)", 
-            zh: "截距法 (高度差定位法)", 
-            desc: "天文定位核心方法。計算高度差：a = Ho - Hc。若 Ho > Hc，截距方向為向著天體方位角（Towards）；若 Ho < Hc，則為背離（Away）。" 
-        },
-        { 
-            en: "Observed Altitude (Ho)", 
-            zh: "觀測高度", 
-            desc: "六分儀讀數（hs）經儀差（IE）、眼高差（Dip）、大氣折射（Refraction）、半徑（SD）及視差（Parallax）修正後之真高度：Ho = hs + Index Corr - Dip - Ref + SD + P。" 
-        },
-        { 
-            en: "Calculated Altitude (Hc)", 
-            zh: "計算高度", 
-            desc: "利用假設船位（AP）之緯度(aLat)、天體赤緯(Dec)及地方時角(LHA)經球面三角公式算得之高度：sin(Hc) = sin(aLat)*sin(Dec) + cos(aLat)*cos(Dec)*cos(LHA)。" 
-        },
-        { 
-            en: "Local Hour Angle (LHA)", 
-            zh: "地方時角", 
-            desc: "天體自觀測者當地子午線向西量至天體子午線之角度。公式：LHA = GHA ± 觀測者經度（East加, West減；LHA = GHA + Long E / LHA = GHA - Long W）。" 
-        },
-        { 
-            en: "Greenwich Hour Angle (GHA)", 
-            zh: "格林威治時角", 
-            desc: "天體自本初子午線（格林威治子午線）向西量至天體子午線之角度。可由航海曆（Nautical Almanac）依 GMT 時間查得。" 
-        },
-        { 
-            en: "Geographical Position (GP)", 
-            zh: "天體地理位置", 
-            desc: "天體中心與地心連線在地球表面的垂直投影點。該點之緯度等於天體之赤緯（Dec），經度等於天體之格林威治時角（GHA W）。" 
-        },
-        { 
-            en: "Latitude by Meridian Altitude", 
-            zh: "中天高度求緯度", 
-            desc: "當天體通過觀測者當地子午線（LHA=0°或180°）時量測高度求緯度。公式：Lat = (90° - Ho) ± Dec（依天體位於觀測者南北側與赤緯同異名決定加減）。" 
-        },
-        { 
-            en: "Polaris Latitude Correction", 
-            zh: "北極星求緯度 (a0, a1, a2)", 
-            desc: "量測北極星高度求觀測者緯度之快速法。公式：Latitude = Ho - 1° + a0 + a1 + a2（a0, a1, a2 為查航海曆得之 LHA Aries、緯度與月份修正值）。" 
-
-        // --- 5. 電子航海與電子儀器 (Electronic Navigation) ---
-        },
-        { 
-            en: "ECDIS", 
-            zh: "電子海圖顯示與資訊系統", 
-            desc: "Electronic Chart Display and Information System。符合 IMO 裝載要求之標準系統，必須具備備援（Redundancy）機制，並使用官方發行之 ENC 向量海圖。" 
-        },
-        { 
-            en: "ENC (Electronic Navigational Chart)", 
-            zh: "電子航海圖 (向量海圖)", 
-            desc: "由各國官方水道局發行、符合 S-57 / S-100 標準之向量海圖。支援物件分層、自動告警及即時水深動態顯示。" 
-        },
-        { 
-            en: "RNC (Raster Navigational Chart)", 
-            zh: "網格海圖 (掃描海圖)", 
-            desc: "將紙本海圖直接數位掃描而成之點陣圖海圖，不具備智慧物件查詢與自動避礁告警功能。" 
-        },
-        { 
-            en: "HDOP / PDOP (DOP Factors)", 
-            zh: "幾何精度衰減因子", 
-            desc: "Dilution of Precision。GPS 定位幾何構型指標。HDOP（水平幾何衰減因子）與 PDOP（空間幾何衰減因子）數值越小（通常 < 4），代表定位精度越高。" 
-        },
-        { 
-            en: "GNSS / GPS", 
-            zh: "全球衛星導航系統", desc: "全球定位系統。定位時至少需接收 3 顆衛星進行 2D 定位（緯度、經度），至少 4 顆衛星進行 3D 定位（含高度與時鐘偏差修正）。" 
-        },
-        { 
-            en: "AIS (Automatic Identification System)", 
+            en: "AIS", 
             zh: "船舶自動識別系統", 
-            desc: "使用 VHF Class A (161.975MHz / 162.025MHz) 廣播動態（船速、位置）、靜態（MMSI、IMO號、呼號）與航程資料（吃水、目的地）。" 
+            desc: "利用 VHF 頻段自動廣播動態（船速、位置）、靜態（MMSI、船名）與航程資料之系統。" 
+        },
+        { 
+            en: "Dead Reckoning (DR) vs Estimated Position (EP)", 
+            zh: "推算船位與估計船位", 
+            desc: "DR 僅依艏向與船速推算（不計風流）；EP 則在 DR 基礎上考量風壓差（Leeway）與水流（Current）修正後之船位。" 
         }
     ],
     quizzes: [
