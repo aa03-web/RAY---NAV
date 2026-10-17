@@ -18,14 +18,14 @@
 
         <!-- 即時關鍵字搜尋框 -->
         <div class="mb-5">
-            <input type="text" id="search-input" placeholder="🔍 搜尋全站關鍵字或避碰條文（例如：Rule 15, AIS, 大圓, 颱風, 避碰, SMCP...）" 
+            <input type="text" id="search-input" placeholder="🔍 搜尋全站關鍵字或避碰條文（例如：Rule 15, AIS, 大圓, 颱風...）" 
                    class="w-full p-3.5 text-sm bg-white border border-slate-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
         </div>
 
         <!-- 科目與法規分頁導覽 -->
         <div class="grid grid-cols-2 md:grid-cols-6 gap-2 mb-6" id="category-buttons">
             <button id="btn-nav" class="p-2.5 text-xs font-semibold rounded-xl bg-blue-600 text-white shadow transition">1. 航海學</button>
-            <button id="btn-safety" class="p-2.5 text-xs font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition">2. 航行安全與氣象</button>
+            <button id="btn-safety" class="p-2.5 text-xs font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition">2. 航安與氣象</button>
             <button id="btn-english" class="p-2.5 text-xs font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition">3. 船舶通訊與英文</button>
             <button id="btn-cargo" class="p-2.5 text-xs font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition">4. 貨物作業</button>
             <button id="btn-management" class="p-2.5 text-xs font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition">5. 船舶操作與管理</button>
@@ -43,9 +43,11 @@
 
     <script>
         let currentCat = 'nav';
+        let currentFilter = 'all'; // 'all', 'important', 'secondary'
 
         function switchCategory(catKey) {
             currentCat = catKey;
+            currentFilter = 'all'; // 切換科目時重置篩選
             const searchInput = document.getElementById('search-input');
             if (searchInput) searchInput.value = '';
 
@@ -65,10 +67,26 @@
                 }
             });
 
-            if (catKey === 'colregs') {
-                renderCOLREGs(window.db.colregs);
-            } else if (window.db && window.db[catKey]) {
-                renderData(window.db[catKey].terms, window.db[catKey].quizzes, window.db[catKey].title);
+            renderCurrentView();
+        }
+
+        function setFilter(filterType) {
+            currentFilter = filterType;
+            renderCurrentView();
+        }
+
+        function renderCurrentView() {
+            if (currentCat === 'colregs') {
+                let rules = window.db.colregs;
+                if (currentFilter === 'important') {
+                    rules = rules.filter(r => r.level === 'important');
+                } else if (currentFilter === 'secondary') {
+                    rules = rules.filter(r => r.level === 'secondary');
+                }
+                renderCOLREGs(rules);
+            } else if (window.db && window.db[currentCat]) {
+                const activeData = window.db[currentCat];
+                renderData(activeData.terms, activeData.quizzes, activeData.title);
             }
         }
 
@@ -76,11 +94,24 @@
             const area = document.getElementById('content-area');
             if (!area) return;
 
-            let rulesHTML = rules.map(r => `
-                <div class="bg-white p-5 rounded-xl shadow-sm border border-amber-100 hover:border-amber-300 transition">
-                    <div class="flex items-center space-x-2 border-b border-slate-100 pb-2 mb-3">
-                        <span class="bg-amber-100 text-amber-800 font-bold text-xs px-2.5 py-1 rounded-md font-mono">${r.rule}</span>
-                        <h3 class="font-bold text-slate-900 text-base">${r.title}</h3>
+            let filterButtonsHTML = `
+                <div class="flex space-x-2 mb-4">
+                    <button onclick="window.setFilter('all')" class="px-3 py-1.5 text-xs font-bold rounded-lg ${currentFilter === 'all' ? 'bg-amber-600 text-white shadow' : 'bg-white text-amber-900 border border-amber-200'} transition">全部條文</button>
+                    <button onclick="window.setFilter('important')" class="px-3 py-1.5 text-xs font-bold rounded-lg ${currentFilter === 'important' ? 'bg-amber-600 text-white shadow' : 'bg-white text-amber-900 border border-amber-200'} transition">⭐ 重要（國考高頻）</button>
+                    <button onclick="window.setFilter('secondary')" class="px-3 py-1.5 text-xs font-bold rounded-lg ${currentFilter === 'secondary' ? 'bg-amber-600 text-white shadow' : 'bg-white text-amber-900 border border-amber-200'} transition">📌 次重要（核心補充）</button>
+                </div>
+            `;
+
+            let rulesHTML = rules.length > 0 ? rules.map(r => `
+                <div class="bg-white p-5 rounded-xl shadow-sm border ${r.level === 'important' ? 'border-amber-300' : 'border-slate-100'} hover:border-amber-400 transition">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-2 mb-3">
+                        <div class="flex items-center space-x-2">
+                            <span class="bg-amber-100 text-amber-800 font-bold text-xs px-2.5 py-1 rounded-md font-mono">${r.rule}</span>
+                            <h3 class="font-bold text-slate-900 text-base">${r.title}</h3>
+                        </div>
+                        <span class="text-xs px-2 py-0.5 rounded-full font-semibold ${r.level === 'important' ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-600'}">
+                            ${r.level === 'important' ? '⭐ 重要' : '📌 次重要'}
+                        </span>
                     </div>
                     <div class="space-y-2">
                         <p class="text-sm font-medium text-slate-800 leading-relaxed bg-amber-50/50 p-3 rounded-lg border border-amber-50">
@@ -91,13 +122,14 @@
                         </p>
                     </div>
                 </div>
-            `).join('');
+            `).join('') : '<p class="text-xs text-slate-400 py-4 text-center">沒有符合條件的條文</p>';
 
             area.innerHTML = `
                 <div class="mb-4 bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl">
                     <h2 class="text-lg font-bold text-amber-950">1972 年國際海上避碰規則 (COLREGs) 中英文對照庫</h2>
-                    <p class="text-xs text-amber-700 mt-1">收錄二等與一等船副國考必考之核心條文，點擊關鍵字搜尋可精準查閱特定 Rule。</p>
+                    <p class="text-xs text-amber-700 mt-1">點擊下方按鈕可快速篩選「重要」與「次重要」國考條文。</p>
                 </div>
+                ${filterButtonsHTML}
                 <div class="space-y-4">
                     ${rulesHTML}
                 </div>
@@ -147,7 +179,7 @@
         function handleGlobalSearch() {
             const kw = document.getElementById('search-input').value.trim().toLowerCase();
             if (!kw || !window.db) {
-                switchCategory(currentCat);
+                renderCurrentView();
                 return;
             }
 
@@ -169,6 +201,8 @@
             const answer = btn.getAttribute('data-answer');
             btn.outerHTML = `<div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-sm text-emerald-800 font-semibold text-center leading-relaxed">正確答案：${answer}</div>`;
         };
+
+        window.setFilter = setFilter;
 
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('btn-nav').addEventListener('click', () => switchCategory('nav'));
