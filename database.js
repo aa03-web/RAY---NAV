@@ -78,7 +78,7 @@ window.db = {
         }
     ],
 
-    // 五大科目資料庫 (大幅補充高頻專業名詞)
+    // 五大科目資料庫 (名詞與真題全方位倍增)
     nav: {
         title: "科目一：航海學 (Navigation)",
         terms: [
@@ -99,7 +99,11 @@ window.db = {
         quizzes: [
             { q: "在墨卡托海圖（Mercator Chart）上，連接地球上兩點的直線代表下列何者？", options: ["(A) 大圓航路", "(B) 等角航線", "(C) 最短距離航線", "(D) 測地線"], answer: "(B) 等角航線" },
             { q: "在天文定位截距法中，當觀測高度 (Ho) 大於計算高度 (Hc) 時，截距的方向應如何繪製？", options: ["(A) 向著天體方位角（Towards）", "(B) 背離天體方位角（Away）", "(C) 垂直於天體方位角", "(D) 平行於天赤道"], answer: "(A) 向著天體方位角（Towards）" },
-            { q: "若已知羅針航向為 050°，磁偏角 3° E，自差 2° W，請問真航向（TC）為何？", options: ["(A) 045°", "(B) 051°", "(C) 055°", "(D) 048°"], answer: "(B) 051° (磁航向=48°, 真航向=48°+3°=051°)" }
+            { q: "若已知羅針航向為 050°，磁偏角 3° E，自差 2° W，請問真航向（TC）為何？", options: ["(A) 045°", "(B) 051°", "(C) 055°", "(D) 048°"], answer: "(B) 051° (磁航向=048°, 真航向=048°+3°=051°)" },
+            { q: "下列關於大圓航法與等角航法之敘述，何者正確？", options: ["(A) 大圓航線在墨卡托海圖上為直線", "(B) 等角航線是兩點間最短距離", "(C) 大圓航線距離較短，但航向需不斷更換", "(D) 兩者在赤道上軌跡不同"], answer: "(C) 大圓航線距離較短，但航向需不斷更換" },
+            { q: "當觀測天體之半徑修正（Semi-diameter, SD）時，若觀測者觀測的是恆星（Star），其半徑修正值通常為多少？", options: ["(A) 0'", "(B) +15'", "(C) -16'", "(D) 視季節而定"], answer: "(A) 0' (恆星距離極遠視為質點，半徑修正為 0)" },
+            { q: "在推算船位（DR）時，若考慮風所造成的風壓差（Leeway）與流（Current）之影響後所得到的船位稱為？", options: ["(A) 真實船位 (Fix)", "(B) 估計船位 (Estimated Position, EP)", "(C) 觀察船位 (Observed Position)", "(D) 假設船位 (AP)"], answer: "(B) 估計船位 (Estimated Position, EP)" },
+            { q: "GPS 衛星定位系統至少需要同時接收幾顆衛星之訊號，方能計算出三維（3D）船位（含高度）？", options: ["(A) 2 顆", "(B) 3 顆", "(C) 4 顆", "(D) 6 顆"], answer: "(C) 4 顆" }
         ]
     },
     safety: {
@@ -120,7 +124,11 @@ window.db = {
         ],
         quizzes: [
             { q: "依據避碰規則，兩動力船舶在互見時形成「交叉相遇」致有碰撞危險，應由哪一艘船舶避讓？", options: ["(A) 看到他船位於自己右舷者", "(B) 看到他船位於自己左舷者", "(C) 馬力較大者", "(D) 噸位較小者"], answer: "(A) 看到他船位於自己右舷者" },
-            { q: "北半球颱風（熱帶氣旋）移動方向的右側半圓，在航海學上稱之為？", options: ["(A) 可航半圓", "(B) 危險半圓", "(C) 安全半圓", "(D) 平穩半圓"], answer: "(B) 危險半圓" }
+            { q: "北半球颱風（熱帶氣旋）移動方向的右側半圓，在航海學上稱之為？", options: ["(A) 可航半圓", "(B) 危險半圓", "(C) 安全半圓", "(D) 平穩半圓"], answer: "(B) 危險半圓" },
+            { q: "在 IALA B 區系統中，船舶由海入港時，航道右側（Starboard Hand）的浮標顏色為何？", options: ["(A) 綠色", "(B) 紅色", "(C) 黃色", "(D) 黑色"], answer: "(B) 紅色 (口訣：進港紅在右)" },
+            { q: "限制顯視度時，若僅以雷達偵測到他船存在，且判定有構成緊迫局面之虞，應採取何種動作？", options: ["(A) 立即向右轉向", "(B) 避免對位於正橫前之他船向左轉向", "(C) 全速倒車", "(D) 鳴放長鳴聲"], answer: "(B) 避免對位於正橫前之他船向左轉向 (Rule 19)" },
+            { q: "當船舶於霧中航行，收到搜救雷達應答器（SART）之訊號時，他人雷達螢幕上將會呈現何種圖樣？", options: ["(A) 1 個閃爍同心圓", "(B) 12 個等距光點或弧線", "(C) 一條連續紅線", "(D) 三角形警告圖標"], answer: "(B) 12 個等距光點或弧線" },
+            { q: "氣象學中，當暖濕空氣流經較冷的海面而冷卻凝結所形成的霧，稱為下列何者？", options: ["(A) 輻射霧", "(B) 平流霧", "(C) 蒸汽霧", "(D) 鋒面霧"], answer: "(B) 平流霧" }
         ]
     },
     english: {
@@ -138,7 +146,11 @@ window.db = {
             { en: "Let go anchor", zh: "拋錨指令", desc: "船舶到達預定錨地時，下令鬆開錨鍊拋錨之標準航海英文。" }
         ],
         quizzes: [
-            { q: "在海上無線電話通訊中，當船舶面臨即刻重大危險且需要立即援助時，應使用的遇險訊號為何？", options: ["(A) MAYDAY", "(B) PAN PAN", "(C) SECURITE", "(D) ROGER"], answer: "(A) MAYDAY" }
+            { q: "在海上無線電話通訊中，當船舶面臨即刻重大危險且需要立即援助時，應使用的遇險訊號為何？", options: ["(A) MAYDAY", "(B) PAN PAN", "(C) SECURITE", "(D) ROGER"], answer: "(A) MAYDAY" },
+            { q: "IMO 標準航海用語 (SMCP) 中，用於呼叫對方且確認語音通訊品質時的標準用語為？", options: ["(A) How do you read me?", "(B) What is your name?", "(C) Over and out", "(D) Standby channel"], answer: "(A) How do you read me?" },
+            { q: "當船長指示準備在錨地拋下右錨時，於標準航海英語中應如何正確發布口令？", options: ["(A) Let go starboard anchor", "(B) Drop down anchor", "(C) Stop engine and throw anchor", "(D) Pull anchor right"], answer: "(A) Let go starboard anchor" },
+            { q: "在 GMDSS 通訊中，廣播有關航行警告（如漂流貨櫃、燈塔熄滅）時應使用下列哪一種呼叫訊號？", options: ["(A) MAYDAY", "(B) PAN PAN", "(C) SECURITE", "(D) SOS"], answer: "(C) SECURITE" },
+            { q: "標準航海英文用語中，'Standby Engine' 所代表的操船指令意義為何？", options: ["(A) 立即熄火", "(B) 備主機（準備隨時機動運轉）", "(C) 全速前進", "(D) 機艙定速航行"], answer: "(B) 備主機（準備隨時機動運轉）" }
         ]
     },
     cargo: {
@@ -156,7 +168,11 @@ window.db = {
             { en: "Dunnage", zh: "墊艙物", desc: "舖設於貨艙底或貨物間之木板、襯墊，用以防潮、防滑、通風及分散重量。" }
         ],
         quizzes: [
-            { q: "依據 IMDG Code 國際海運危險品準則，爆炸品屬於第幾類危險品？", options: ["(A) 第一類", "(B) 第三類", "(C) 第七類", "(D) 第九類"], answer: "(A) 第一類" }
+            { q: "依據 IMDG Code 國際海運危險品準則，爆炸品屬於第幾類危險品？", options: ["(A) 第一類", "(B) 第三類", "(C) 第七類", "(D) 第九類"], answer: "(A) 第一類" },
+            { q: "運輸易流化之散裝精礦貨物時，若貨物含水量超過下列何者，即有造成船舶傾覆之危險？", options: ["(A) 適運水分極限 (TML)", "(B) 飽和吃水線", "(C) 臨界面積比", "(D) 氣化點"], answer: "(A) 適運水分極限 (TML)" },
+            { q: "油輪在裝載或卸貨作業中，為了隨時掌控油艙內液面高度與預留熱脹冷縮空間，通常會量測下列何者？", options: ["(A) 艙頂高度 (Ullage)", "(B) 船底厚度", "(C) 壓載水比重", "(D) 乾舷高度"], answer: "(A) 艙頂高度 (Ullage)" },
+            { q: "貨物之積載因數（Stowage Factor, SF）大於貨艙之艙容因數（Grain/Bale Capacity）時，代表該貨物屬於？", options: ["(A) 重貨（Heavy Cargo）", "(B) 輕貨/泡貨（Measurement Cargo）", "(C) 危險品", "(D) 易流化貨物"], answer: "(B) 輕貨/泡貨（Measurement Cargo）" },
+            { q: "油輪為防止油氣爆炸，惰性氣體系統（IGS）供入油艙內的氣體含氧量，最高不得超過體積之多少百分比？", options: ["(A) 2%", "(B) 5%", "(C) 8%", "(D) 10%"], answer: "(B) 5%" }
         ]
     },
     management: {
@@ -174,7 +190,11 @@ window.db = {
             { en: "ISM Code", zh: "國際安全管理章程", desc: "要求航商公司及船舶建立安全管理系統 (SMS) 並取得 DOC 與 SMC 證書。" }
         ],
         quizzes: [
-            { q: "當船舶之初橫穩高 (GM) 值為正值，但數值過小時，船體將會呈現何種狀態？", options: ["(A) 搖晃過於劇烈（硬船）", "(B) 回復力矩較小，搖晃週期長（軟船）", "(C) 智慧型傾覆", "(D) 完全不搖晃"], answer: "(B) 回復力矩較小，搖晃週期長（軟船）" }
+            { q: "當船舶之初橫穩高 (GM) 值為正值，但數值過小時，船體將會呈現何種狀態？", options: ["(A) 搖晃過於劇烈（硬船）", "(B) 回復力矩較小，搖晃週期長（軟船）", "(C) 智慧型傾覆", "(D) 完全不搖晃"], answer: "(B) 回復力矩較小，搖晃週期長（軟船）" },
+            { q: "旨在保障海員工作條件、醫療、住宿與福利權益的國際公約為下列何者？", options: ["(A) MLC 2006", "(B) SOLAS", "(C) MARPOL", "(D) ISPS"], answer: "(A) MLC 2006 (海事勞工公約)" },
+            { q: "夜間發現有人員從左舷落水（MOB），最常用於令船舶循原航向逆向駛回落水點的操船動作為？", options: ["(A) 威廉遜轉向法 (Williamson Turn)", "(B) 急轉彎法", "(C) 全速倒車", "(D) 雙錨拋留法"], answer: "(A) 威廉遜轉向法 (Williamson Turn)" },
+            { q: "依據 ISM Code 規定，航商公司必須取得下列哪一項符合證書，方可進行船舶營運管理？", options: ["(A) DOC (Document of Compliance)", "(B) SMC", "(C) IOPP", "(D) Safe Manning Certificate"], answer: "(A) DOC (Document of Compliance)" },
+            { q: "船舶在淺水區（Shallow Water）航行時，因水流流速加快導致船體下沉與排水量變化之現象稱為？", options: ["(A) 淺水下沉效應 (Squat Effect)", "(B) 岸壁效應", "(C) 自由液面效應", "(D) 追浪效應"], answer: "(A) 淺水下沉效應 (Squat Effect)" }
         ]
     }
 };
