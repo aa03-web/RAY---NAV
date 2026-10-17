@@ -1,21 +1,81 @@
 window.db = {
-    // 帶有重要度分級的 1972 年國際海上避碰規則 (COLREGs) 條文庫
+    // 完整英文對照與重要度分級的 1972 年國際海上避碰規則 (COLREGs) 條文庫
     colregs: [
-        { rule: "Rule 1", title: "Application / 適用範圍", level: "secondary", en: "These Rules shall apply to all vessels upon the high seas...", zh: "本規則適用於公海及公海所連通可供海航船舶航行之一切水域中之一切船舶。" },
-        { rule: "Rule 2", title: "Responsibility / 責任", level: "important", en: "Nothing in these Rules shall exonerate any vessel...", zh: "本規則之各項規定，均不得免除任何船舶...因疏忽良好船員通常經驗所要求之預防措施所生之後果責任。" },
-        { rule: "Rule 3", title: "General Definitions / 一般定義", level: "secondary", en: "'Vessel' includes every description of water craft...", zh: "『船舶』一詞，包括用作或能用作水上運輸工具之一切水上機具..." },
-        { rule: "Rule 5", title: "Look-out / 瞭望", level: "important", en: "Every vessel shall at all times maintain a proper look-out...", zh: "每一船舶在任何時間，均應利用視覺、聽覺以及一切可用方法，保持適當之瞭望。" },
-        { rule: "Rule 6", title: "Safe Speed / 安全航速", level: "important", en: "Every vessel shall at all times proceed at a safe speed...", zh: "每一船舶在任何時間，均應以安全航速航行，俾能採取適當而有效之避碰行動。" },
-        { rule: "Rule 7", title: "Risk of Collision / 碰撞危險", level: "important", en: "Every vessel shall use all available means to determine if risk of collision exists...", zh: "每一船舶應利用一切可用方法，以判斷是否存在碰撞危險。如有疑慮應視為存在。" },
-        { rule: "Rule 8", title: "Action to Avoid Collision / 避碰行動", level: "important", en: "Any action taken to avoid collision shall be positive, made in ample time...", zh: "為避碰所採取之行動，如情況許可，應極明確，及早進行，並遵循良好船員經驗。" },
-        { rule: "Rule 10", title: "Traffic Separation Schemes / 分道航行制", level: "important", en: "This Rule applies to traffic separation schemes adopted by the Organization...", zh: "本規則適用於經本組織所採納之分道航行制。在分道航行制內航行應使用通航線方向。" },
-        { rule: "Rule 13", title: "Overtaking / 追越", level: "important", en: "Any vessel overtaking any other shall keep out of the way of the vessel being overtaken.", zh: "任何船舶在追越他船時，均應避讓被追越之船舶。" },
-        { rule: "Rule 14", title: "Head-on Situation / 迎頭相遇局面", level: "important", en: "When two power-driven vessels are meeting on reciprocal courses, each shall alter to starboard...", zh: "當兩動力船舶迎頭相遇致有碰撞危險時，雙方均應向右轉向，從他船左舷通過。" },
-        { rule: "Rule 15", title: "Crossing Situation / 交叉相遇局面", level: "important", en: "When two power-driven vessels are crossing, the vessel which has the other on starboard shall keep out...", zh: "當兩動力船舶交叉相遇致有碰撞危險時，他船在其右舷者應避讓他船。" },
-        { rule: "Rule 18", title: "Responsibilities Between Vessels / 船舶間之責任劃分", level: "important", en: "A power-driven vessel underway shall keep out of the way of NUC, RAM, Fishing, Sailing...", zh: "航行中之動力船舶，應避讓：操縱失靈船、限制操縱能力船、從事捕魚船、帆船。" },
-        { rule: "Rule 19", title: "Conduct of Vessels in Restricted Visibility / 限制顯視度下之船舶航行", level: "important", en: "This Rule applies to vessels not in sight of one another in restricted visibility...", zh: "本條適用於限制顯視度區域內互看不見之船舶。每一船舶應以安全航速航行。" },
-        { rule: "Rule 27", title: "Vessels Not Under Command or Restricted in Ability to Maneuver / 操縱失靈與限制操縱船", level: "secondary", en: "A vessel not under command shall exhibit two all-round red lights...", zh: "操縱失靈船應顯示：垂直線上全周紅燈兩盞與兩個球體。" },
-        { rule: "Rule 35", title: "Sound Signals in Restricted Visibility / 限制顯視度之聲號", level: "secondary", en: "A power-driven vessel making way shall sound at intervals of not more than 2 minutes one prolonged blast.", zh: "對水前進中之動力船舶，應每隔不超過 2 分鐘鳴放長聲一響。" }
+        { 
+            rule: "Rule 1", title: "Application / 適用範圍", level: "secondary", 
+            en: "These Rules shall apply to all vessels upon the high seas and in all waters connected therewith navigable by seagoing vessels.", 
+            zh: "本規則適用於公海及公海所連通可供海航船舶航行之一切水域中之一切船舶。" 
+        },
+        { 
+            rule: "Rule 2", title: "Responsibility / 責任", level: "important", 
+            en: "Nothing in these Rules shall exonerate any vessel, or the owner, master or crew thereof, from the consequences of any neglect to comply with these Rules or of the neglect of any precaution which may be required by the ordinary practice of seamen, or by the special circumstances of the case.", 
+            zh: "本規則之各項規定，均不得免除任何船舶，或其船東、船長、船員，因疏忽遵守本規則，或疏忽良好船員通常經驗或當時特殊情況所要求之任何預防措施，所生之任何後果責任。" 
+        },
+        { 
+            rule: "Rule 3", title: "General Definitions / 一般定義", level: "secondary", 
+            en: "'Vessel' includes every description of water craft, including non-displacement craft, WIG craft and seaplanes, used or capable of being used as a means of transportation on water.", 
+            zh: "『船舶』一詞，包括用作或能用作水上運輸工具之一切水上機具，含無排水量船艇、地效翼船及水上飛機。" 
+        },
+        { 
+            rule: "Rule 5", title: "Look-out / 瞭望", level: "important", 
+            en: "Every vessel shall at all times maintain a proper look-out by sight and hearing as well as by all available means appropriate in the prevailing circumstances and conditions so as to make a full appraisal of the situation and of the risk of collision.", 
+            zh: "每一船舶在任何時間，均應利用視覺、聽覺以及適合當時環境與情況之一切可用方法，保持適當之瞭望，俾對局勢及碰撞危險作充分之估計。" 
+        },
+        { 
+            rule: "Rule 6", title: "Safe Speed / 安全航速", level: "important", 
+            en: "Every vessel shall at all times proceed at a safe speed so that she can take proper and effective action to avoid collision and be stopped within a distance appropriate to the prevailing circumstances and conditions.", 
+            zh: "每一船舶在任何時間，均應以安全航速航行，俾能採取適當而有效之避碰行動，並能在適合當時環境與情況之適當距離內將船停住。" 
+        },
+        { 
+            rule: "Rule 7", title: "Risk of Collision / 碰撞危險", level: "important", 
+            en: "Every vessel shall use all available means appropriate to the prevailing circumstances and conditions to determine if risk of collision exists. If there is any doubt such risk shall be deemed to exist.", 
+            zh: "每一船舶應利用適合當時環境與情況之一切可用方法，以判斷是否存在碰撞危險。如有任何疑慮，應視為該危險存在。" 
+        },
+        { 
+            rule: "Rule 8", title: "Action to Avoid Collision / 避碰行動", level: "important", 
+            en: "Any action taken to avoid collision shall be taken in accordance with the Rules of this Part and shall, if the circumstances of the case admit, be positive, made in ample time and with due regard to the observance of good seamanship.", 
+            zh: "為避碰所採取之任何行動，應依本章規定行之；如情況許可，應極明確，及早進行，並充分遵循良好的船員經驗。" 
+        },
+        { 
+            rule: "Rule 10", title: "Traffic Separation Schemes / 分道航行制", level: "important", 
+            en: "This Rule applies to traffic separation schemes adopted by the Organization and does not relieve any vessel of her obligation under any other rule. A vessel navigating in or near traffic lanes shall use general traffic lane direction.", 
+            zh: "本規則適用於經本組織所採納之分道航行制，並不免除任何船舶依其他規則所應盡之義務。在分道航行制內或其附近航行之船舶，應使用一般通航線方向。" 
+        },
+        { 
+            rule: "Rule 13", title: "Overtaking / 追越", level: "important", 
+            en: "Notwithstanding anything contained in the Rules of Part B, Sections I and II, any vessel overtaking any other shall keep out of the way of the vessel being overtaken.", 
+            zh: "不論本章第一單元及第二單元各條如何規定，任何船舶在追越他船時，均應避讓被追越之船舶。" 
+        },
+        { 
+            rule: "Rule 14", title: "Head-on Situation / 迎頭相遇局面", level: "important", 
+            en: "When two power-driven vessels are meeting on reciprocal or nearly reciprocal courses so as to involve risk of collision each shall alter her course to starboard so that each shall pass on the port side of the other.", 
+            zh: "當兩動力船舶在相近或相對航向上相遇致有碰撞危險時，雙方均應向右轉向，俾使各從他船之左舷通過。" 
+        },
+        { 
+            rule: "Rule 15", title: "Crossing Situation / 交叉相遇局面", level: "important", 
+            en: "When two power-driven vessels are crossing so as to involve risk of collision, the vessel which has the other on her own starboard side shall keep out of the way and shall, if the circumstances of the case admit, avoid crossing ahead of the other vessel.", 
+            zh: "當兩動力船舶交叉相遇致有碰撞危險時，他船在其右舷者，應避讓他船，如情況許可，並應避免橫越他船之船首。" 
+        },
+        { 
+            rule: "Rule 18", title: "Responsibilities Between Vessels / 船舶間之責任劃分", level: "important", 
+            en: "A power-driven vessel underway shall keep out of the way of: a vessel not under command; a vessel restricted in her ability to maneuver; a vessel engaged in fishing; a sailing vessel.", 
+            zh: "航行中之動力船舶，應避讓：操縱失靈船、限制操縱能力船、從事捕魚之船舶、帆船。" 
+        },
+        { 
+            rule: "Rule 19", title: "Conduct of Vessels in Restricted Visibility / 限制顯視度下之船舶航行", level: "important", 
+            en: "This Rule applies to vessels not in sight of one another when navigating in or near an area of restricted visibility. Every vessel shall proceed at a safe speed adapted to the prevailing circumstances and conditions of restricted visibility.", 
+            zh: "本條適用於在限制顯視度區域內或其附近航行而互看不見之船舶。每一船舶應依當時限制顯視度之環境與情況，以安全航速航行。" 
+        },
+        { 
+            rule: "Rule 27", title: "Vessels Not Under Command or Restricted in Ability to Maneuver / 操縱失靈與限制操縱船", level: "secondary", 
+            en: "A vessel not under command shall exhibit: two all-round red lights in a vertical line where they can best be seen; two balls or similar shapes in a vertical line.", 
+            zh: "操縱失靈船應顯示：垂直線上能見度最佳處之全周紅燈兩盞；垂直線上能見度最佳處之球體或類似形體兩個。" 
+        },
+        { 
+            rule: "Rule 35", title: "Sound Signals in Restricted Visibility / 限制顯視度之聲號", level: "secondary", 
+            en: "In or near an area of restricted visibility, whether by day or by night, signals shall be used as follows: A power-driven vessel making way through the water shall sound at intervals of not more than 2 minutes one prolonged blast.", 
+            zh: "在限制顯視度區域內或其附近，不論日夜，聲號之使用規定如下：對水前進中之動力船舶，應每隔不超過 2 分鐘鳴放長聲一響。" 
+        }
     ],
 
     // 五大科目資料庫
@@ -23,25 +83,36 @@ window.db = {
         title: "科目一：航海學 (Navigation)",
         terms: [
             { en: "Mercator Chart", zh: "漸長分海圖", desc: "將球形地球展開成平面的海圖，等角航線在此圖上為直線，便於導航。" },
-            { en: "Great Circle Sailing", zh: "大圓航法", desc: "沿大圓弧線航行，是地球上兩點間最短的航程路線。" }
+            { en: "Great Circle Sailing", zh: "大圓航法", desc: "沿大圓弧線航行，是地球上兩點間最短的航程路線。" },
+            { en: "Compass Error (CE)", zh: "羅經差", desc: "磁偏角與自差之代數和（CE = Var + Dev），為真方位與羅經方位之差。" },
+            { en: "Intercept Method", zh: "截距法定位", desc: "天文定位利用觀測高度(Ho)與計算高度(Hc)之差 (a = Ho - Hc) 繪製船位線。" },
+            { en: "ECDIS / AIS", zh: "電子海圖與自動識別系統", desc: "ECDIS 提供數位海圖，結合 AIS 自動廣播動態資訊提升航行安全。" },
+            { en: "Dead Reckoning (DR)", zh: "推算船位", desc: "僅依據前一已知船位、真航向與船速推算出的船位，不計風流影響。" }
         ],
         quizzes: [
-            { q: "在墨卡托海圖（Mercator Chart）上，連接地球上兩點的直線代表下列何者？", options: ["(A) 大圓航路", "(B) 等角航線", "(C) 最短距離航線", "(D) 測地線"], answer: "(B) 等角航線" }
+            { q: "在墨卡托海圖（Mercator Chart）上，連接地球上兩點的直線代表下列何者？", options: ["(A) 大圓航路", "(B) 等角航線", "(C) 最短距離航線", "(D) 測地線"], answer: "(B) 等角航線" },
+            { q: "在天文定位截距法中，當觀測高度 (Ho) 大於計算高度 (Hc) 時，截距的方向應如何繪製？", options: ["(A) 向著天體方位角（Towards）", "(B) 背離天體方位角（Away）", "(C) 垂直於天體方位角", "(D) 平行於天赤道"], answer: "(A) 向著天體方位角（Towards）" },
+            { q: "若已知羅針航向為 050°，磁偏角 3° E，自差 2° W，請問真航向（TC）為何？", options: ["(A) 045°", "(B) 051°", "(C) 055°", "(D) 048°"], answer: "(B) 051° (磁航向=48°, 真航向=48°+3°=051°)" }
         ]
     },
     safety: {
         title: "科目二：航行安全與氣象 (Navigation Safety & Meteorology)",
         terms: [
-            { en: "COLREGs", zh: "1972 年國際海上避碰規則", desc: "規範船舶在海上互見、限制顯視度下的航行責任、號燈號標與聲號。" }
+            { en: "COLREGs", zh: "1972 年國際海上避碰規則", desc: "規範船舶在海上互見、限制顯視度下的航行責任、號燈號標與聲號。" },
+            { en: "Tropical Cyclone", zh: "熱帶氣旋 (颱風)", desc: "北半球颱風進路右側為危險半圓（風向由前轉後且風浪大），左側為可航半圓。" },
+            { en: "GMDSS", zh: "全球海上遇險與安全系統", desc: "利用 EPIRB、SART、NAVTEX 等數位通信建立的全球救難網絡。" }
         ],
         quizzes: [
-            { q: "依據避碰規則，兩動力船舶在互見時形成「交叉相遇」致有碰撞危險，應由哪一艘船舶避讓？", options: ["(A) 看到他船位於自己右舷者", "(B) 看到他船位於自己左舷者", "(C) 馬力較大者", "(D) 噸位較小者"], answer: "(A) 看到他船位於自己右舷者" }
+            { q: "依據避碰規則，兩動力船舶在互見時形成「交叉相遇」致有碰撞危險，應由哪一艘船舶避讓？", options: ["(A) 看到他船位於自己右舷者", "(B) 看到他船位於自己左舷者", "(C) 馬力較大者", "(D) 噸位較小者"], answer: "(A) 看到他船位於自己右舷者" },
+            { q: "北半球颱風（熱帶氣旋）移動方向的右側半圓，在航海學上稱之為？", options: ["(A) 可航半圓", "(B) 危險半圓", "(C) 安全半圓", "(D) 平穩半圓"], answer: "(B) 危險半圓" }
         ]
     },
     english: {
         title: "科目三：船舶通訊與航海英文 (Communications & Maritime English)",
         terms: [
-            { en: "IMO SMCP", zh: "標準航海用語", desc: "IMO Standard Marine Communication Phrases，全球通用海事標準溝通英語。" }
+            { en: "IMO SMCP", zh: "標準航海用語", desc: "IMO Standard Marine Communication Phrases，全球通用海事標準溝通英語。" },
+            { en: "VHF Channel 16", zh: "VHF 16 頻道", desc: "國際海上遇險、安全與呼叫專用無線電頻率 (156.8 MHz)。" },
+            { en: "Mayday / Pan-Pan / Securite", zh: "遇險/緊急/安全呼叫", desc: "Mayday 表示人命危急；Pan-Pan 表示緊急狀況；Securite 表示航行安全通告。" }
         ],
         quizzes: [
             { q: "在海上無線電話通訊中，當船舶面臨即刻重大危險且需要立即援助時，應使用的遇險訊號為何？", options: ["(A) MAYDAY", "(B) PAN PAN", "(C) SECURITE", "(D) ROGER"], answer: "(A) MAYDAY" }
@@ -50,7 +121,8 @@ window.db = {
     cargo: {
         title: "科目四：貨物作業 (Cargo Handling & Stowage)",
         terms: [
-            { en: "IMDG Code", zh: "國際海運危險品準則", desc: "將危險品分為九大類，規範危險品之標示、包裝、裝載與隔離要求。" }
+            { en: "IMDG Code", zh: "國際海運危險品準則", desc: "將危險品分為九大類，規範危險品之標示、包裝、裝載與隔離要求。" },
+            { en: "CSS Code", zh: "貨物繫固安全操作法碼", desc: "規範貨櫃與重型貨物在船上的綁紮與繫固強度要求。" }
         ],
         quizzes: [
             { q: "依據 IMDG Code 國際海運危險品準則，爆炸品屬於第幾類危險品？", options: ["(A) 第一類", "(B) 第三類", "(C) 第七類", "(D) 第九類"], answer: "(A) 第一類" }
@@ -59,7 +131,8 @@ window.db = {
     management: {
         title: "科目五：船舶操作與人員管理 (Ship Operations & Personnel Management)",
         terms: [
-            { en: "Metacentric Height (GM)", zh: "初橫穩高 (GM)", desc: "船體橫穩度重要指標，GM > 0 具正穩度，值過小易傾覆，過大則搖晃劇烈。" }
+            { en: "Metacentric Height (GM)", zh: "初橫穩高 (GM)", desc: "船體橫穩度重要指標，GM > 0 具正穩度，值過小易傾覆，過大則搖晃劇烈。" },
+            { en: "Williamson Turn", zh: "威廉遜轉向法", desc: "人員落水 (MOB) 時最常用的操船回航救援方法，可準確回到原航軌。" }
         ],
         quizzes: [
             { q: "當船舶之初橫穩高 (GM) 值為正值，但數值過小時，船體將會呈現何種狀態？", options: ["(A) 搖晃過於劇烈（硬船）", "(B) 回復力矩較小，搖晃週期長（軟船）", "(C) 智慧型傾覆", "(D) 完全不搖晃"], answer: "(B) 回復力矩較小，搖晃週期長（軟船）" }
