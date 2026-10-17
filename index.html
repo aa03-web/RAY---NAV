@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>河海特考航海人員測驗雲端學習工作站</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen p-4 pb-20">
+
+    <div class="max-w-2xl mx-auto">
+        <!-- 頂部標題區 -->
+        <header class="text-center my-6">
+            <span class="text-xs font-bold tracking-widest text-blue-600 bg-blue-50 px-3 py-1 rounded-full uppercase border border-blue-100">Maritime Certification Station</span>
+            <h1 class="text-2xl md:text-3xl font-extrabold text-blue-950 mt-2">河海特考航海人員測驗總複習庫</h1>
+            <p class="text-xs md:text-sm text-slate-500 mt-1.5">一等/二等船副 · 五大核心專業科目完整檢索與考古題</p>
+        </header>
+
+        <!-- 即時關鍵字搜尋框 -->
+        <div class="mb-5">
+            <input type="text" id="search-input" placeholder="🔍 搜尋全站關鍵字（例如：AIS, 大圓, 颱風, 避碰, 橫穩度...）" 
+                   class="w-full p-3.5 text-sm bg-white border border-slate-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+        </div>
+
+        <!-- 五大科目分頁導覽 -->
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-2 mb-6" id="category-buttons">
+            <button id="btn-nav" class="p-2.5 text-xs md:text-sm font-semibold rounded-xl bg-blue-600 text-white shadow transition">1. 航海學</button>
+            <button id="btn-safety" class="p-2.5 text-xs md:text-sm font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition">2. 航安與氣象</button>
+            <button id="btn-handling" class="p-2.5 text-xs md:text-sm font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition">3. 船操與船體</button>
+            <button id="btn-law" class="p-2.5 text-xs md:text-sm font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition">4. 通訊與法規</button>
+            <button id="btn-cargo" class="p-2.5 text-xs md:text-sm font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition">5. 貨物作業</button>
+        </div>
+
+        <!-- 主內容顯示區 -->
+        <main id="content-area" class="space-y-4">
+            <!-- JavaScript 動態渲染內容 -->
+        </main>
+    </div>
+
+    <script>
+        // 五大科目核心資料庫
+        const db = {
+            nav: {
+                title: "科目一：航海學 (Navigation)",
+                terms: [
+                    { en: "Mercator Chart", zh: "漸長分海圖", desc: "將球形地球展開成平面的海圖，等角航線在此圖上為直線，便於導航。" },
+                    { en: "Great Circle Sailing", zh: "大圓航法", desc: "沿大圓弧線航行，是地球上兩點間最短的航程路線。" },
+                    { en: "Variation & Deviation", zh: "磁偏角與自差", desc: "磁偏角為地磁極與真北極之夾角；自差為船體磁性所引起的指針偏差。" },
+                    { en: "Intercept Method", zh: "截距法定位", desc: "天文定位利用觀測高度(Ho)與計算高度(Hc)之差 (a = Ho - Hc) 繪製船位線。" },
+                    { en: "ECDIS / AIS", zh: "電子海圖與自動識別系統", desc: "ECDIS 提供數位海圖，結合 AIS 自動廣播動態資訊提升航行安全。" }
+                ],
+                quizzes: [
+                    {
+                        q: "在墨卡托海圖（Mercator Chart）上，連接地球上兩點的直線代表下列何者？",
+                        options: ["(A) 大圓航路", "(B) 等角航線", "(C) 最短距離航線", "(D) 測地線"],
+                        answer: "(B) 等角航線"
+                    },
+                    {
+                        q: "在天文定位截距法中，當觀測高度 (Ho) 大於計算高度 (Hc) 時，截距的方向應如何繪製？",
+                        options: ["(A) 向著天體方位角（Towards）", "(B) 背離天體方位角（Away）", "(C) 垂直於天體方位角", "(D) 平行於天赤道"],
+                        answer: "(A) 向著天體方位角（Towards）"
+                    }
+                ]
+            },
+            safety: {
+                title: "科目二：航行安全與氣象 (Navigation Safety & Meteorology)",
+                terms: [
+                    { en: "COLREGs", zh: "1972 年國際海上避碰規則", desc: "規範船舶在海上互見、限制顯視度下的航行責任、號燈號標與聲號。" },
+                    { en: "Tropical Cyclone", zh: "熱帶氣旋 (颱風)", desc: "北半球颱風進路右側為危險半圓（風向由前轉後且風浪大），左側為可航半圓。" },
+                    { en: "GMDSS", zh: "全球海上遇險與安全系統", desc: "利用 EPIRB、SART、NAVTEX 等數位通信建立的全球救難網絡。" },
+                    { en: "Restricted Visibility", zh: "限制顯視度航行", desc: "因霧、霾或暴雨致能見度受限時，應備妥主機，保持安全航速航行 (Rule 19)。" }
+                ],
+                quizzes: [
+                    {
+                        q: "依據避碰規則，兩動力船舶在互見時形成「交叉相遇」致有碰撞危險，應由哪一艘船舶避讓？",
+                        options: ["(A) 看到他船位於自己右舷者", "(B) 看到他船位於自己左舷者", "(C) 馬力較大者", "(D) 噸位較小者"],
+                        answer: "(A) 看到他船位於自己右舷者"
+                    },
+                    {
+                        q: "北半球颱風（熱帶氣旋）移動方向的右側半圓，在航海學上稱之為？",
+                        options: ["(A) 可航半圓", "(B) 危險半圓", "(C) 安全半圓", "(D) 平穩半圓"],
+                        answer: "(B) 危險半圓"
+                    }
+                ]
+            },
+            handling: {
+                title: "科目三：船舶操縱與船體知識 (Ship Handling & Stability)",
+                terms: [
+                    { en: "Metacentric Height (GM)", zh: "初橫穩高 (GM)", desc: "船體橫穩度重要指標，GM > 0 具正穩度，值過小易傾覆，過大則搖晃劇烈。" },
+                    { en: "Squat Effect", zh: "淺水下沉效應", desc: "船舶在淺水航行時，因流速加快導致船體下沉與艏艉傾側增加。" },
+                    { en: "Williamson Turn", zh: "威廉遜轉向法", desc: "人員落水 (MOB) 時最常用的操船回航救援方法，可準確回到原航軌。" },
+                    { en: "Load Line", zh: "載重線標誌 (普林索標誌)", desc: "標示船舶在不同海水密度與季節區域中所允許最大浸水吃水線。" }
+                ],
+                quizzes: [
+                    {
+                        q: "當船舶之初橫穩高 (GM) 值為正值，但數值過小時，船體將會呈現何種狀態？",
+                        options: ["(A) 搖晃過於劇烈（硬船）", "(B) 回復力矩較小，搖晃週期長（軟船）", "(C) 立即翻覆", "(D) 完全不會搖晃"],
+                        answer: "(B) 回復力矩較小，搖晃週期長（軟船）"
+                    },
+                    {
+                        q: "夜間發現有人員從左舷落水（MOB），最常用於令船舶循原航向逆向駛回落水點的操船動作為？",
+                        options: ["(A) 威廉遜轉向法 (Williamson Turn)", "(B) 急轉彎法", "(C) 全速倒車", "(D) 雙錨拋留法"],
+                        answer: "(A) 威廉遜轉向法 (Williamson Turn)"
+                    }
+                ]
+            },
+            law: {
+                title: "科目四：船舶通訊與航海法規 (Communications & Regulations)",
+                terms: [
+                    { en: "SOLAS", zh: "國際海上人命安全公約", desc: "規範船舶結構、防火、救生設備、無線電及安全導航之最低國際標準。" },
+                    { en: "MARPOL", zh: "國際防止船舶污染公約", desc: "包含六大附則（油類、有害液體、垃圾、污水、廢氣等）防治海洋污染。" },
+                    { en: "STCW", zh: "船員訓練發證及值班標準公約", desc: "規定全球海員受訓、適任能力標準及航行值班守則之國際規範。" },
+                    { en: "ISM Code", zh: "國際安全管理章程", desc: "要求航商公司及船舶建立安全管理系統 (SMS) 並取得 DOC 與 SMC 證書。" }
+                ],
+                quizzes: [
+                    {
+                        q: "規範全球航海人員適任證書簽發、訓練標準及航行值班規範之國際公約為何？",
+                        options: ["(A) SOLAS", "(B) STCW", "(C) MARPOL", "(D) MLC"],
+                        answer: "(B) STCW"
+                    },
+                    {
+                        q: "專門針對防範船舶排放廢油、生活污水、垃圾及廢氣等造成海洋污染的公約為？",
+                        options: ["(A) MARPOL", "(B) SOLAS", "(C) ISPS Code", "(D) COLREGs"],
+                        answer: "(A) MARPOL"
+                    }
+                ]
+            },
+            cargo: {
+                title: "科目五：貨物作業 (Cargo Handling & Stowage)",
+                terms: [
+                    { en: "IMDG Code", zh: "國際海運危險品準則", desc: "將危險品分為九大類，規範危險品之標示、包裝、裝載與隔離要求。" },
+                    { en: "CSS Code", zh: "貨物繫固安全操作法碼", desc: "規範貨櫃與重型貨物在船上的綁紮與繫固強度要求。" },
+                    { en: "Liquefaction Risk", zh: "易流化貨物風險", desc: "散裝精礦砂含水量過高時，航行中受震動易流化造成船體瞬間傾覆。" },
+                    { en: "Ullage", zh: "油艙空隙率", desc: "油輪裝載液體貨物時，液面至艙頂之垂直空隙距離。" }
+                ],
+                quizzes: [
+                    {
+                        q: "依據 IMDG Code 國際海運危險品準則，爆炸品屬於第幾類危險品？",
+                        options: ["(A) 第一類", "(B) 第三類", "(C) 第七類", "(D) 第九類"],
+                        answer: "(A) 第一類"
+                    },
+                    {
+                        q: "運輸易流化之散裝精礦貨物時，若貨物含水量超過下列何者，即有造成船舶傾覆之危險？",
+                        options: ["(A) 適運水分極限 (TML)", "(B) 飽和吃水線", "(C) 臨界面積比", "(D) 氣化點"],
+                        answer: "(A) 適運水分極限 (TML)"
+                    }
+                ]
+            }
+        };
+
+        let currentCat = 'nav';
+
+        function switchCategory(catKey) {
+            currentCat = catKey;
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) searchInput.value = '';
+
+            const keys = ['nav', 'safety', 'handling', 'law', 'cargo'];
+            keys.forEach(k => {
+                const btn = document.getElementById(`btn-${k}`);
+                if (btn) {
+                    if (k === catKey) {
+                        btn.className = "p-2.5 text-xs md:text-sm font-semibold rounded-xl bg-blue-600 text-white shadow transition";
+                    } else {
+                        btn.className = "p-2.5 text-xs md:text-sm font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition";
+                    }
+                }
+            });
+
+            renderData(db[catKey].terms, db[catKey].quizzes, db[catKey].title);
+        }
+
+        function renderData(terms, quizzes, title) {
+            const area = document.getElementById('content-area');
+            if (!area) return;
+
+            let termsHTML = terms.length > 0 ? terms.map(t => `
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+                    <div class="flex justify-between items-start">
+                        <h3 class="font-bold text-blue-900">${t.zh}</h3>
+                        <span class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-mono">${t.en}</span>
+                    </div>
+                    <p class="text-sm text-slate-600 mt-2 leading-relaxed">${t.desc}</p>
+                </div>
+            `).join('') : '<p class="text-xs text-slate-400 py-2">無符合的名詞</p>';
+
+            let quizzesHTML = quizzes.length > 0 ? quizzes.map((quiz, index) => `
+                <div class="mt-3 bg-blue-50/70 border border-blue-100 p-4 rounded-xl">
+                    <span class="text-xs font-bold text-blue-600 tracking-wider uppercase">河海特考真題 ${index + 1}</span>
+                    <p class="text-sm font-medium text-slate-800 my-2">${quiz.q}</p>
+                    <div class="space-y-1.5 mb-3">
+                        ${quiz.options.map(opt => `<div class="text-xs text-slate-600 bg-white/80 p-2 rounded border border-slate-100">${opt}</div>`).join('')}
+                    </div>
+                    <button onclick="window.toggleAnswer(this)" data-answer="${quiz.answer}" class="w-full py-2 bg-blue-600 text-white rounded-lg text-sm font-medium shadow hover:bg-blue-700 transition">顯示答案與解析</button>
+                </div>
+            `).join('') : '<p class="text-xs text-slate-400 py-2">無符合的考題</p>';
+
+            area.innerHTML = `
+                <div class="mb-3">
+                    <h2 class="text-lg font-bold text-slate-900 border-l-4 border-blue-600 pl-3">${title}</h2>
+                </div>
+                <div class="space-y-3">
+                    <h3 class="text-xs font-bold text-slate-400 tracking-wider uppercase">重點名詞與概念 (${terms.length})</h3>
+                    ${termsHTML}
+                </div>
+                <div class="mt-6">
+                    <h3 class="text-xs font-bold text-slate-400 tracking-wider uppercase mb-2">考古題精選 (${quizzes.length})</h3>
+                    ${quizzesHTML}
+                </div>
+            `;
+        }
+
+        function handleGlobalSearch() {
+            const kw = document.getElementById('search-input').value.trim().toLowerCase();
+            if (!kw) {
+                switchCategory(currentCat);
+                return;
+            }
+
+            const activeData = db[currentCat];
+            const matchedTerms = activeData.terms.filter(t => t.zh.toLowerCase().includes(kw) || t.en.toLowerCase().includes(kw) || t.desc.toLowerCase().includes(kw));
+            const matchedQuizzes = activeData.quizzes.filter(q => q.q.toLowerCase().includes(kw) || q.options.some(o => o.toLowerCase().includes(kw)));
+
+            renderData(matchedTerms, matchedQuizzes, `${activeData.title} - 檢索結果`);
+        }
+
+        window.toggleAnswer = function(btn) {
+            const answer = btn.getAttribute('data-answer');
+            btn.outerHTML = `<div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-sm text-emerald-800 font-semibold text-center leading-relaxed">正確答案：${answer}</div>`;
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('btn-nav').addEventListener('click', () => switchCategory('nav'));
+            document.getElementById('btn-safety').addEventListener('click', () => switchCategory('safety'));
+            document.getElementById('btn-handling').addEventListener('click', () => switchCategory('handling'));
+            document.getElementById('btn-law').addEventListener('click', () => switchCategory('law'));
+            document.getElementById('btn-cargo').addEventListener('click', () => switchCategory('cargo'));
+
+            document.getElementById('search-input').addEventListener('input', handleGlobalSearch);
+
+            switchCategory('nav');
+        });
+    </script>
+</body>
+</html>
