@@ -8,27 +8,28 @@
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans min-h-screen p-4 pb-20">
 
-    <div class="max-w-2xl mx-auto">
+    <div class="max-w-3xl mx-auto">
         <!-- 頂部標題區 -->
         <header class="text-center my-6">
             <span class="text-xs font-bold tracking-widest text-blue-600 bg-blue-50 px-3 py-1 rounded-full uppercase border border-blue-100">Maritime Certification Station</span>
             <h1 class="text-2xl md:text-3xl font-extrabold text-blue-950 mt-2">河海特考航海人員測驗總複習庫</h1>
-            <p class="text-xs md:text-sm text-slate-500 mt-1.5">一等/二等船副 · 五大核心專業科目完整檢索與題庫</p>
+            <p class="text-xs md:text-sm text-slate-500 mt-1.5">一等/二等船副 · 五大核心專業科目與 COLREGs 完整法規庫</p>
         </header>
 
         <!-- 即時關鍵字搜尋框 -->
         <div class="mb-5">
-            <input type="text" id="search-input" placeholder="🔍 搜尋全站關鍵字（例如：AIS, 大圓, 颱風, 避碰, SMCP, IMDG...）" 
+            <input type="text" id="search-input" placeholder="🔍 搜尋全站關鍵字或避碰條文（例如：Rule 15, AIS, 大圓, 颱風, 避碰, SMCP...）" 
                    class="w-full p-3.5 text-sm bg-white border border-slate-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
         </div>
 
-        <!-- 五大科目分頁導覽 -->
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-2 mb-6" id="category-buttons">
-            <button id="btn-nav" class="p-2.5 text-xs md:text-sm font-semibold rounded-xl bg-blue-600 text-white shadow transition">1. 航海學</button>
-            <button id="btn-safety" class="p-2.5 text-xs md:text-sm font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition">2. 航行安全與氣象</button>
-            <button id="btn-english" class="p-2.5 text-xs md:text-sm font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition">3. 船舶通訊與航海英文</button>
-            <button id="btn-cargo" class="p-2.5 text-xs md:text-sm font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition">4. 貨物作業</button>
-            <button id="btn-management" class="p-2.5 text-xs md:text-sm font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition">5. 船舶操作與人員管理</button>
+        <!-- 科目與法規分頁導覽 -->
+        <div class="grid grid-cols-2 md:grid-cols-6 gap-2 mb-6" id="category-buttons">
+            <button id="btn-nav" class="p-2.5 text-xs font-semibold rounded-xl bg-blue-600 text-white shadow transition">1. 航海學</button>
+            <button id="btn-safety" class="p-2.5 text-xs font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition">2. 航行安全與氣象</button>
+            <button id="btn-english" class="p-2.5 text-xs font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition">3. 船舶通訊與英文</button>
+            <button id="btn-cargo" class="p-2.5 text-xs font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition">4. 貨物作業</button>
+            <button id="btn-management" class="p-2.5 text-xs font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition">5. 船舶操作與管理</button>
+            <button id="btn-colregs" class="p-2.5 text-xs font-semibold rounded-xl bg-amber-500 text-white shadow transition">📜 避碰規則條文</button>
         </div>
 
         <!-- 主內容顯示區 -->
@@ -48,21 +49,59 @@
             const searchInput = document.getElementById('search-input');
             if (searchInput) searchInput.value = '';
 
-            const keys = ['nav', 'safety', 'english', 'cargo', 'management'];
+            const keys = ['nav', 'safety', 'english', 'cargo', 'management', 'colregs'];
             keys.forEach(k => {
                 const btn = document.getElementById(`btn-${k}`);
                 if (btn) {
                     if (k === catKey) {
-                        btn.className = "p-2.5 text-xs md:text-sm font-semibold rounded-xl bg-blue-600 text-white shadow transition";
+                        btn.className = k === 'colregs' 
+                            ? "p-2.5 text-xs font-semibold rounded-xl bg-amber-600 text-white shadow transition ring-2 ring-amber-300"
+                            : "p-2.5 text-xs font-semibold rounded-xl bg-blue-600 text-white shadow transition";
                     } else {
-                        btn.className = "p-2.5 text-xs md:text-sm font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition";
+                        btn.className = k === 'colregs' 
+                            ? "p-2.5 text-xs font-semibold rounded-xl bg-amber-50 text-amber-800 border border-amber-200 shadow-sm transition"
+                            : "p-2.5 text-xs font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition";
                     }
                 }
             });
 
-            if (window.db && window.db[catKey]) {
+            if (catKey === 'colregs') {
+                renderCOLREGs(window.db.colregs);
+            } else if (window.db && window.db[catKey]) {
                 renderData(window.db[catKey].terms, window.db[catKey].quizzes, window.db[catKey].title);
             }
+        }
+
+        function renderCOLREGs(rules) {
+            const area = document.getElementById('content-area');
+            if (!area) return;
+
+            let rulesHTML = rules.map(r => `
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-amber-100 hover:border-amber-300 transition">
+                    <div class="flex items-center space-x-2 border-b border-slate-100 pb-2 mb-3">
+                        <span class="bg-amber-100 text-amber-800 font-bold text-xs px-2.5 py-1 rounded-md font-mono">${r.rule}</span>
+                        <h3 class="font-bold text-slate-900 text-base">${r.title}</h3>
+                    </div>
+                    <div class="space-y-2">
+                        <p class="text-sm font-medium text-slate-800 leading-relaxed bg-amber-50/50 p-3 rounded-lg border border-amber-50">
+                            <span class="text-amber-900 font-bold block text-xs uppercase mb-1">中文條文：</span>${r.zh}
+                        </p>
+                        <p class="text-xs text-slate-600 font-mono leading-relaxed bg-slate-50 p-3 rounded-lg">
+                            <span class="text-slate-400 font-bold block text-xs tracking-wider mb-1">ENGLISH TEXT:</span>${r.en}
+                        </p>
+                    </div>
+                </div>
+            `).join('');
+
+            area.innerHTML = `
+                <div class="mb-4 bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl">
+                    <h2 class="text-lg font-bold text-amber-950">1972 年國際海上避碰規則 (COLREGs) 中英文對照庫</h2>
+                    <p class="text-xs text-amber-700 mt-1">收錄二等與一等船副國考必考之核心條文，點擊關鍵字搜尋可精準查閱特定 Rule。</p>
+                </div>
+                <div class="space-y-4">
+                    ${rulesHTML}
+                </div>
+            `;
         }
 
         function renderData(terms, quizzes, title) {
@@ -112,13 +151,18 @@
                 return;
             }
 
-            const activeData = window.db[currentCat];
-            if (!activeData) return;
+            if (currentCat === 'colregs') {
+                const matched = window.db.colregs.filter(r => r.rule.toLowerCase().includes(kw) || r.title.toLowerCase().includes(kw) || r.zh.toLowerCase().includes(kw) || r.en.toLowerCase().includes(kw));
+                renderCOLREGs(matched);
+            } else {
+                const activeData = window.db[currentCat];
+                if (!activeData) return;
 
-            const matchedTerms = activeData.terms.filter(t => t.zh.toLowerCase().includes(kw) || t.en.toLowerCase().includes(kw) || t.desc.toLowerCase().includes(kw));
-            const matchedQuizzes = activeData.quizzes.filter(q => q.q.toLowerCase().includes(kw) || q.options.some(o => o.toLowerCase().includes(kw)));
+                const matchedTerms = activeData.terms.filter(t => t.zh.toLowerCase().includes(kw) || t.en.toLowerCase().includes(kw) || t.desc.toLowerCase().includes(kw));
+                const matchedQuizzes = activeData.quizzes.filter(q => q.q.toLowerCase().includes(kw) || q.options.some(o => o.toLowerCase().includes(kw)));
 
-            renderData(matchedTerms, matchedQuizzes, `${activeData.title} - 檢索結果`);
+                renderData(matchedTerms, matchedQuizzes, `${activeData.title} - 檢索結果`);
+            }
         }
 
         window.toggleAnswer = function(btn) {
@@ -132,6 +176,7 @@
             document.getElementById('btn-english').addEventListener('click', () => switchCategory('english'));
             document.getElementById('btn-cargo').addEventListener('click', () => switchCategory('cargo'));
             document.getElementById('btn-management').addEventListener('click', () => switchCategory('management'));
+            document.getElementById('btn-colregs').addEventListener('click', () => switchCategory('colregs'));
 
             document.getElementById('search-input').addEventListener('input', handleGlobalSearch);
 
