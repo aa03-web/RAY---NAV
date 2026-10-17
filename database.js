@@ -78,16 +78,23 @@ window.db = {
         }
     ],
 
-    // 五大科目資料庫
+    // 五大科目資料庫 (大幅補充高頻專業名詞)
     nav: {
         title: "科目一：航海學 (Navigation)",
         terms: [
             { en: "Mercator Chart", zh: "漸長分海圖", desc: "將球形地球展開成平面的海圖，等角航線在此圖上為直線，便於導航。" },
             { en: "Great Circle Sailing", zh: "大圓航法", desc: "沿大圓弧線航行，是地球上兩點間最短的航程路線。" },
+            { en: "Rhumb Line", zh: "等角航線", desc: "在地球表面與所有子午線相交角度均相同的曲線，海圖上為直線。" },
             { en: "Compass Error (CE)", zh: "羅經差", desc: "磁偏角與自差之代數和（CE = Var + Dev），為真方位與羅經方位之差。" },
+            { en: "Variation (Var)", zh: "磁偏角", desc: "真北與磁北之間的夾角，隨地理位置與年份變化。" },
+            { en: "Deviation (Dev)", zh: "自差", desc: "磁北與磁羅經北之間的夾角，由船體鐵質與磁場影響產生。" },
             { en: "Intercept Method", zh: "截距法定位", desc: "天文定位利用觀測高度(Ho)與計算高度(Hc)之差 (a = Ho - Hc) 繪製船位線。" },
-            { en: "ECDIS / AIS", zh: "電子海圖與自動識別系統", desc: "ECDIS 提供數位海圖，結合 AIS 自動廣播動態資訊提升航行安全。" },
-            { en: "Dead Reckoning (DR)", zh: "推算船位", desc: "僅依據前一已知船位、真航向與船速推算出的船位，不計風流影響。" }
+            { en: "Assumed Position (AP)", zh: "假設船位", desc: "天文航海計算中，為簡化球面三角計算而選取的假定地理座標。" },
+            { en: "ECDIS", zh: "電子海圖顯示與資訊系統", desc: "符合 IMO 規範之標準數位海圖系統，整合 GPS、雷達與 AIS。" },
+            { en: "AIS", zh: "船舶自動識別系統", desc: "利用 VHF 頻段自動發送與接收船舶動態、靜態及航程資訊之系統。" },
+            { en: "Dead Reckoning (DR)", zh: "推算船位", desc: "僅依據前一已知船位、真航向與船速推算出的船位，不計風流影響。" },
+            { en: "Estimated Position (EP)", zh: "估計船位", desc: "在推算船位 (DR) 基礎上，考量風（Leeway）與流（Current）修正後所得之船位。" },
+            { en: "Gyro Error", zh: "陀螺羅經差", desc: "陀螺羅經指示方向與真北方向之夾角，通常由疊標或天文觀測測得。" }
         ],
         quizzes: [
             { q: "在墨卡托海圖（Mercator Chart）上，連接地球上兩點的直線代表下列何者？", options: ["(A) 大圓航路", "(B) 等角航線", "(C) 最短距離航線", "(D) 測地線"], answer: "(B) 等角航線" },
@@ -100,7 +107,16 @@ window.db = {
         terms: [
             { en: "COLREGs", zh: "1972 年國際海上避碰規則", desc: "規範船舶在海上互見、限制顯視度下的航行責任、號燈號標與聲號。" },
             { en: "Tropical Cyclone", zh: "熱帶氣旋 (颱風)", desc: "北半球颱風進路右側為危險半圓（風向由前轉後且風浪大），左側為可航半圓。" },
-            { en: "GMDSS", zh: "全球海上遇險與安全系統", desc: "利用 EPIRB、SART、NAVTEX 等數位通信建立的全球救難網絡。" }
+            { en: "Dangerous Semi-circle", zh: "危險半圓", desc: "北半球熱帶氣旋移動方向右側半圓，風速與颱風移動速度疊加且風向吹向颱風路徑前方。" },
+            { en: "Navigable Semi-circle", zh: "可航半圓", desc: "北半球熱帶氣旋移動方向左側半圓，風速與移速抵銷，風向吹向颱風後方。" },
+            { en: "GMDSS", zh: "全球海上遇險與安全系統", desc: "利用 EPIRB、SART、NAVTEX 等數位通信建立的全球救難網絡。" },
+            { en: "EPIRB", zh: "緊急指位無線電標示台", desc: "船舶沉沒時自動釋放並發送 406 MHz 遇險訊號至 COSPAS-SARSAT 衛星系統。" },
+            { en: "SART", zh: "搜救雷達應答器", desc: "接收 9 GHz 搜救雷達訊號後回傳訊號，在他人雷達螢幕顯示 12 個等距光點/弧線。" },
+            { en: "NAVTEX", zh: "航海通告接收機", desc: "利用 518 kHz 中頻自動列印/顯示海岸電台發送之氣象警報與航行警告。" },
+            { en: "Restricted Visibility", zh: "限制顯視度航行", desc: "因霧、霾或暴雨致能見度受限時，應備妥主機，保持安全航速航行 (Rule 19)。" },
+            { en: "Buoyage System B", zh: "IALA B 區浮標系統", desc: "我國採用之航標系統，港口進港時紅標在右舷、綠標在左舷。" },
+            { en: "Radiation Fog", zh: "輻射霧", desc: "晴朗無雲夜間陸地輻射冷卻所形成之霧，日出後通常會消散。" },
+            { en: "Advection Fog", zh: "平流霧", desc: "暖濕空氣移經較冷水面凝結而成，範圍廣且持續時間長，海洋上極為常見。" }
         ],
         quizzes: [
             { q: "依據避碰規則，兩動力船舶在互見時形成「交叉相遇」致有碰撞危險，應由哪一艘船舶避讓？", options: ["(A) 看到他船位於自己右舷者", "(B) 看到他船位於自己左舷者", "(C) 馬力較大者", "(D) 噸位較小者"], answer: "(A) 看到他船位於自己右舷者" },
@@ -112,7 +128,14 @@ window.db = {
         terms: [
             { en: "IMO SMCP", zh: "標準航海用語", desc: "IMO Standard Marine Communication Phrases，全球通用海事標準溝通英語。" },
             { en: "VHF Channel 16", zh: "VHF 16 頻道", desc: "國際海上遇險、安全與呼叫專用無線電頻率 (156.8 MHz)。" },
-            { en: "Mayday / Pan-Pan / Securite", zh: "遇險/緊急/安全呼叫", desc: "Mayday 表示人命危急；Pan-Pan 表示緊急狀況；Securite 表示航行安全通告。" }
+            { en: "MAYDAY", zh: "遇險呼叫訊號", desc: "最高優先權之語音遇險訊號，代表船舶或人員面臨即刻重大危險需要立即救援。" },
+            { en: "PAN PAN", zh: "緊急呼叫訊號", desc: "優先權次於 MAYDAY，用於宣告關於船舶或人員安全之緊急狀況。" },
+            { en: "SECURITE", zh: "安全呼叫訊號", desc: "用於發布重大航行警告、重要氣象預警或重要導航資訊。" },
+            { en: "Draft / Air Draft", zh: "吃水與水面上淨空高度", desc: "Draft 為船底至水面距離；Air Draft 為水面至船體最高點距離。" },
+            { en: "Underway", zh: "航行中", desc: "船舶未錨泊、未繫纜於岸上或未擱淺之狀態。" },
+            { en: "Making way", zh: "對水前進中", desc: "船舶正透過主機或推進器在水面上移動運轉。" },
+            { en: "Standby Engine", zh: "備模/備主機", desc: "指示機艙進入隨時可進行操縱與增減速之備戰狀態。" },
+            { en: "Let go anchor", zh: "拋錨指令", desc: "船舶到達預定錨地時，下令鬆開錨鍊拋錨之標準航海英文。" }
         ],
         quizzes: [
             { q: "在海上無線電話通訊中，當船舶面臨即刻重大危險且需要立即援助時，應使用的遇險訊號為何？", options: ["(A) MAYDAY", "(B) PAN PAN", "(C) SECURITE", "(D) ROGER"], answer: "(A) MAYDAY" }
@@ -122,7 +145,15 @@ window.db = {
         title: "科目四：貨物作業 (Cargo Handling & Stowage)",
         terms: [
             { en: "IMDG Code", zh: "國際海運危險品準則", desc: "將危險品分為九大類，規範危險品之標示、包裝、裝載與隔離要求。" },
-            { en: "CSS Code", zh: "貨物繫固安全操作法碼", desc: "規範貨櫃與重型貨物在船上的綁紮與繫固強度要求。" }
+            { en: "Segregation", zh: "危險品隔離", desc: "依據 IMDG 規定，不同性質之危險品需保持遠離（Away from）、隔開（Separated from）等距離。" },
+            { en: "CSS Code", zh: "貨物繫固安全操作法碼", desc: "規範貨櫃與重型貨物在船上的綁紮與繫固強度要求。" },
+            { en: "Stowage Factor (SF)", zh: "積載因數", desc: "每一噸貨物所佔用之貨艙體積（立方公尺/公噸或立方英尺/長噸）。" },
+            { en: "Liquefaction Risk", zh: "易流化貨物風險", desc: "散裝精礦砂含水量過高時，航行中受震動易流化造成船體瞬間傾覆。" },
+            { en: "Transportable Moisture Limit (TML)", zh: "適運水分極限", desc: "易流化貨物允許裝船安全運輸之最大水分含量上限（通常為 FMP 之 90%）。" },
+            { en: "Ullage", zh: "油艙空隙率", desc: "油輪裝載液體貨物時，液面至艙頂之垂直空隙距離。" },
+            { en: "Inert Gas System (IGS)", zh: "惰性氣體系統", desc: "油輪利用含氧量低於 5% 之氣體填充油艙，防範爆炸與火災風險。" },
+            { en: "Grain Stability", zh: "散裝穀物穩度", desc: "載運散裝穀物時需計算船舶因穀物移位產生的橫傾力矩與穩度喪失風險。" },
+            { en: "Dunnage", zh: "墊艙物", desc: "舖設於貨艙底或貨物間之木板、襯墊，用以防潮、防滑、通風及分散重量。" }
         ],
         quizzes: [
             { q: "依據 IMDG Code 國際海運危險品準則，爆炸品屬於第幾類危險品？", options: ["(A) 第一類", "(B) 第三類", "(C) 第七類", "(D) 第九類"], answer: "(A) 第一類" }
@@ -132,7 +163,15 @@ window.db = {
         title: "科目五：船舶操作與人員管理 (Ship Operations & Personnel Management)",
         terms: [
             { en: "Metacentric Height (GM)", zh: "初橫穩高 (GM)", desc: "船體橫穩度重要指標，GM > 0 具正穩度，值過小易傾覆，過大則搖晃劇烈。" },
-            { en: "Williamson Turn", zh: "威廉遜轉向法", desc: "人員落水 (MOB) 時最常用的操船回航救援方法，可準確回到原航軌。" }
+            { en: "Center of Gravity (G)", zh: "重心", desc: "船舶總重量集中作用之點，貨物向上移動會使 G 點上升導致 GM 減小。" },
+            { en: "Center of Buoyancy (B)", zh: "浮心", desc: "船舶排開海水體積之幾何中心，隨著船體傾斜而移動。" },
+            { en: "Squat Effect", zh: "淺水下沉效應", desc: "船舶在淺水航行時，因流速加快導致船體下沉與艏艉傾側增加。" },
+            { en: "Williamson Turn", zh: "威廉遜轉向法", desc: "人員落水 (MOB) 時最常用的操船回航救援方法，可準確回到原航軌。" },
+            { en: "Turning Circle", zh: "旋轉圈", desc: "船舶滿舵迴轉時，重心在水面上描繪出之軌跡，包含轉舵遲延、進距與戰術直徑。" },
+            { en: "Advance & Transfer", zh: "進距與偏距", desc: "進距為轉舵起至航向改變 90 度時原航向前進距離；偏距為向側邊偏移距離。" },
+            { en: "STCW", zh: "航海人員訓練發證及值班標準公約", desc: "規範全球海員受訓、適任能力標準及航行值班守則之國際規範。" },
+            { en: "MLC 2006", zh: "海事勞工公約", desc: "國際勞工組織制定，保障海員工作條件、醫療、住宿與福利權益之公約。" },
+            { en: "ISM Code", zh: "國際安全管理章程", desc: "要求航商公司及船舶建立安全管理系統 (SMS) 並取得 DOC 與 SMC 證書。" }
         ],
         quizzes: [
             { q: "當船舶之初橫穩高 (GM) 值為正值，但數值過小時，船體將會呈現何種狀態？", options: ["(A) 搖晃過於劇烈（硬船）", "(B) 回復力矩較小，搖晃週期長（軟船）", "(C) 智慧型傾覆", "(D) 完全不搖晃"], answer: "(B) 回復力矩較小，搖晃週期長（軟船）" }
