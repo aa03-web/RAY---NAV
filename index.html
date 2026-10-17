@@ -13,22 +13,22 @@
         <header class="text-center my-6">
             <span class="text-xs font-bold tracking-widest text-blue-600 bg-blue-50 px-3 py-1 rounded-full uppercase border border-blue-100">Maritime Certification Station</span>
             <h1 class="text-2xl md:text-3xl font-extrabold text-blue-950 mt-2">河海特考航海人員測驗總複習庫</h1>
-            <p class="text-xs md:text-sm text-slate-500 mt-1.5">一等/二等船副 · 五大核心專業科目完整檢索與考古題</p>
+            <p class="text-xs md:text-sm text-slate-500 mt-1.5">一等/二等船副 · 五大核心專業科目完整檢索與題庫</p>
         </header>
 
         <!-- 即時關鍵字搜尋框 -->
         <div class="mb-5">
-            <input type="text" id="search-input" placeholder="🔍 搜尋全站關鍵字（例如：AIS, 大圓, 颱風, 避碰, 橫穩度...）" 
+            <input type="text" id="search-input" placeholder="🔍 搜尋全站關鍵字（例如：AIS, 大圓, 颱風, 避碰, SMCP, IMDG...）" 
                    class="w-full p-3.5 text-sm bg-white border border-slate-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
         </div>
 
         <!-- 五大科目分頁導覽 -->
         <div class="grid grid-cols-2 md:grid-cols-5 gap-2 mb-6" id="category-buttons">
             <button id="btn-nav" class="p-2.5 text-xs md:text-sm font-semibold rounded-xl bg-blue-600 text-white shadow transition">1. 航海學</button>
-            <button id="btn-safety" class="p-2.5 text-xs md:text-sm font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition">2. 航安與氣象</button>
-            <button id="btn-handling" class="p-2.5 text-xs md:text-sm font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition">3. 船操與船體</button>
-            <button id="btn-law" class="p-2.5 text-xs md:text-sm font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition">4. 通訊與法規</button>
-            <button id="btn-cargo" class="p-2.5 text-xs md:text-sm font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition">5. 貨物作業</button>
+            <button id="btn-safety" class="p-2.5 text-xs md:text-sm font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition">2. 航行安全與氣象</button>
+            <button id="btn-english" class="p-2.5 text-xs md:text-sm font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition">3. 船舶通訊與航海英文</button>
+            <button id="btn-cargo" class="p-2.5 text-xs md:text-sm font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition">4. 貨物作業</button>
+            <button id="btn-management" class="p-2.5 text-xs md:text-sm font-semibold rounded-xl bg-white text-slate-700 border border-slate-200 shadow-sm transition">5. 船舶操作與人員管理</button>
         </div>
 
         <!-- 主內容顯示區 -->
@@ -38,16 +38,17 @@
     </div>
 
     <script>
-        // 五大科目核心資料庫
+        // 五大科目資料庫
         const db = {
             nav: {
                 title: "科目一：航海學 (Navigation)",
                 terms: [
                     { en: "Mercator Chart", zh: "漸長分海圖", desc: "將球形地球展開成平面的海圖，等角航線在此圖上為直線，便於導航。" },
                     { en: "Great Circle Sailing", zh: "大圓航法", desc: "沿大圓弧線航行，是地球上兩點間最短的航程路線。" },
-                    { en: "Variation & Deviation", zh: "磁偏角與自差", desc: "磁偏角為地磁極與真北極之夾角；自差為船體磁性所引起的指針偏差。" },
+                    { en: "Compass Error (CE)", zh: "羅經差", desc: "磁偏角與自差之代數和（CE = Var + Dev），為真方位與羅經方位之差。" },
                     { en: "Intercept Method", zh: "截距法定位", desc: "天文定位利用觀測高度(Ho)與計算高度(Hc)之差 (a = Ho - Hc) 繪製船位線。" },
-                    { en: "ECDIS / AIS", zh: "電子海圖與自動識別系統", desc: "ECDIS 提供數位海圖，結合 AIS 自動廣播動態資訊提升航行安全。" }
+                    { en: "ECDIS / AIS", zh: "電子海圖與自動識別系統", desc: "ECDIS 提供數位海圖，結合 AIS 自動廣播動態資訊提升航行安全。" },
+                    { en: "Dead Reckoning (DR)", zh: "推算船位", desc: "僅依據前一已知船位、真航向與船速推算出的船位，不計風流影響。" }
                 ],
                 quizzes: [
                     {
@@ -59,6 +60,11 @@
                         q: "在天文定位截距法中，當觀測高度 (Ho) 大於計算高度 (Hc) 時，截距的方向應如何繪製？",
                         options: ["(A) 向著天體方位角（Towards）", "(B) 背離天體方位角（Away）", "(C) 垂直於天體方位角", "(D) 平行於天赤道"],
                         answer: "(A) 向著天體方位角（Towards）"
+                    },
+                    {
+                        q: "若已知羅針航向為 050°，磁偏角 3° E，自差 2° W，請問真航向（TC）為何？",
+                        options: ["(A) 045°", "(B) 051°", "(C) 055°", "(D) 048°"],
+                        answer: "(B) 051° (磁航向=48°, 真航向=48°+3°=051°)"
                     }
                 ]
             },
@@ -68,7 +74,8 @@
                     { en: "COLREGs", zh: "1972 年國際海上避碰規則", desc: "規範船舶在海上互見、限制顯視度下的航行責任、號燈號標與聲號。" },
                     { en: "Tropical Cyclone", zh: "熱帶氣旋 (颱風)", desc: "北半球颱風進路右側為危險半圓（風向由前轉後且風浪大），左側為可航半圓。" },
                     { en: "GMDSS", zh: "全球海上遇險與安全系統", desc: "利用 EPIRB、SART、NAVTEX 等數位通信建立的全球救難網絡。" },
-                    { en: "Restricted Visibility", zh: "限制顯視度航行", desc: "因霧、霾或暴雨致能見度受限時，應備妥主機，保持安全航速航行 (Rule 19)。" }
+                    { en: "Restricted Visibility", zh: "限制顯視度航行", desc: "因霧、霾或暴雨致能見度受限時，應備妥主機，保持安全航速航行 (Rule 19)。" },
+                    { en: "Buoyage System B", zh: "IALA B 區浮標系統", desc: "我國採用之航標系統，港口進港時紅標在右舷、綠標在左舷。" }
                 ],
                 quizzes: [
                     {
@@ -80,53 +87,37 @@
                         q: "北半球颱風（熱帶氣旋）移動方向的右側半圓，在航海學上稱之為？",
                         options: ["(A) 可航半圓", "(B) 危險半圓", "(C) 安全半圓", "(D) 平穩半圓"],
                         answer: "(B) 危險半圓"
+                    },
+                    {
+                        q: "在 IALA B 區系統中，船舶由海入港時，航道右側（Starboard Hand）的浮標顏色為何？",
+                        options: ["(A) 綠色", "(B) 紅色", "(C) 黃色", "(D) 黑色"],
+                        answer: "(B) 紅色 (口訣：進港紅在右)"
                     }
                 ]
             },
-            handling: {
-                title: "科目三：船舶操縱與船體知識 (Ship Handling & Stability)",
+            english: {
+                title: "科目三：船舶通訊與航海英文 (Communications & Maritime English)",
                 terms: [
-                    { en: "Metacentric Height (GM)", zh: "初橫穩高 (GM)", desc: "船體橫穩度重要指標，GM > 0 具正穩度，值過小易傾覆，過大則搖晃劇烈。" },
-                    { en: "Squat Effect", zh: "淺水下沉效應", desc: "船舶在淺水航行時，因流速加快導致船體下沉與艏艉傾側增加。" },
-                    { en: "Williamson Turn", zh: "威廉遜轉向法", desc: "人員落水 (MOB) 時最常用的操船回航救援方法，可準確回到原航軌。" },
-                    { en: "Load Line", zh: "載重線標誌 (普林索標誌)", desc: "標示船舶在不同海水密度與季節區域中所允許最大浸水吃水線。" }
+                    { en: "IMO SMCP", zh: "標準航海用語", desc: "IMO Standard Marine Communication Phrases，全球通用海事標準溝通英語。" },
+                    { en: "VHF Channel 16", zh: "VHF 16 頻道", desc: "國際海上遇險、安全與呼叫專用無線電頻率 (156.8 MHz)。" },
+                    { en: "Mayday / Pan-Pan / Securite", zh: "遇險/緊急/安全呼叫", desc: "Mayday 表示人命危急；Pan-Pan 表示緊急狀況；Securite 表示航行安全通告。" },
+                    { en: "Urgency Message", zh: "緊急通訊號誌", desc: "使用 Pan-Pan 宣告，優先權僅次於 Mayday 遇險通訊。" }
                 ],
                 quizzes: [
                     {
-                        q: "當船舶之初橫穩高 (GM) 值為正值，但數值過小時，船體將會呈現何種狀態？",
-                        options: ["(A) 搖晃過於劇烈（硬船）", "(B) 回復力矩較小，搖晃週期長（軟船）", "(C) 立即翻覆", "(D) 完全不會搖晃"],
-                        answer: "(B) 回復力矩較小，搖晃週期長（軟船）"
+                        q: "在海上無線電話通訊中，當船舶面臨即刻重大危險且需要立即援助時，應使用的遇險訊號為何？",
+                        options: ["(A) MAYDAY", "(B) PAN PAN", "(C) SECURITE", "(D) ROGER"],
+                        answer: "(A) MAYDAY"
                     },
                     {
-                        q: "夜間發現有人員從左舷落水（MOB），最常用於令船舶循原航向逆向駛回落水點的操船動作為？",
-                        options: ["(A) 威廉遜轉向法 (Williamson Turn)", "(B) 急轉彎法", "(C) 全速倒車", "(D) 雙錨拋留法"],
-                        answer: "(A) 威廉遜轉向法 (Williamson Turn)"
-                    }
-                ]
-            },
-            law: {
-                title: "科目四：船舶通訊與航海法規 (Communications & Regulations)",
-                terms: [
-                    { en: "SOLAS", zh: "國際海上人命安全公約", desc: "規範船舶結構、防火、救生設備、無線電及安全導航之最低國際標準。" },
-                    { en: "MARPOL", zh: "國際防止船舶污染公約", desc: "包含六大附則（油類、有害液體、垃圾、污水、廢氣等）防治海洋污染。" },
-                    { en: "STCW", zh: "船員訓練發證及值班標準公約", desc: "規定全球海員受訓、適任能力標準及航行值班守則之國際規範。" },
-                    { en: "ISM Code", zh: "國際安全管理章程", desc: "要求航商公司及船舶建立安全管理系統 (SMS) 並取得 DOC 與 SMC 證書。" }
-                ],
-                quizzes: [
-                    {
-                        q: "規範全球航海人員適任證書簽發、訓練標準及航行值班規範之國際公約為何？",
-                        options: ["(A) SOLAS", "(B) STCW", "(C) MARPOL", "(D) MLC"],
-                        answer: "(B) STCW"
-                    },
-                    {
-                        q: "專門針對防範船舶排放廢油、生活污水、垃圾及廢氣等造成海洋污染的公約為？",
-                        options: ["(A) MARPOL", "(B) SOLAS", "(C) ISPS Code", "(D) COLREGs"],
-                        answer: "(A) MARPOL"
+                        q: "IMO 標準航海用語 (SMCP) 中，用於呼叫對方且確認語音通訊品質時的標準用語為？",
+                        options: ["(A) How do you read me?", "(B) What is your name?", "(C) Over and out", "(D) Standby channel"],
+                        answer: "(A) How do you read me?"
                     }
                 ]
             },
             cargo: {
-                title: "科目五：貨物作業 (Cargo Handling & Stowage)",
+                title: "科目四：貨物作業 (Cargo Handling & Stowage)",
                 terms: [
                     { en: "IMDG Code", zh: "國際海運危險品準則", desc: "將危險品分為九大類，規範危險品之標示、包裝、裝載與隔離要求。" },
                     { en: "CSS Code", zh: "貨物繫固安全操作法碼", desc: "規範貨櫃與重型貨物在船上的綁紮與繫固強度要求。" },
@@ -145,6 +136,27 @@
                         answer: "(A) 適運水分極限 (TML)"
                     }
                 ]
+            },
+            management: {
+                title: "科目五：船舶操作與人員管理 (Ship Operations & Personnel Management)",
+                terms: [
+                    { en: "Metacentric Height (GM)", zh: "初橫穩高 (GM)", desc: "船體橫穩度重要指標，GM > 0 具正穩度，值過小易傾覆，過大則搖晃劇烈。" },
+                    { en: "Squat Effect", zh: "淺水下沉效應", desc: "船舶在淺水航行時，因流速加快導致船體下沉與艏艉傾側增加。" },
+                    { en: "STCW / MLC", zh: "船員公約與勞工公約", desc: "STCW 規範訓練與值班標準；MLC 保障海員工作與生活條件權益。" },
+                    { en: "ISM Code", zh: "國際安全管理章程", desc: "要求航商公司及船舶建立安全管理系統 (SMS) 並取得 DOC 與 SMC 證書。" }
+                ],
+                quizzes: [
+                    {
+                        q: "當船舶之初橫穩高 (GM) 值為正值，但數值過小時，船體將會呈現何種狀態？",
+                        options: ["(A) 搖晃過於劇烈（硬船）", "(B) 回復力矩較小，搖晃週期長（軟船）", "(C) 智慧型傾覆", "(D) 完全不搖晃"],
+                        answer: "(B) 回復力矩較小，搖晃週期長（軟船）"
+                    },
+                    {
+                        q: "旨在保障海員工作條件、醫療、住宿與福利權益的國際公約為下列何者？",
+                        options: ["(A) MLC 2006", "(B) SOLAS", "(C) MARPOL", "(D) ISPS"],
+                        answer: "(A) MLC 2006 (海事勞工公約)"
+                    }
+                ]
             }
         };
 
@@ -155,7 +167,7 @@
             const searchInput = document.getElementById('search-input');
             if (searchInput) searchInput.value = '';
 
-            const keys = ['nav', 'safety', 'handling', 'law', 'cargo'];
+            const keys = ['nav', 'safety', 'english', 'cargo', 'management'];
             keys.forEach(k => {
                 const btn = document.getElementById(`btn-${k}`);
                 if (btn) {
@@ -232,9 +244,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('btn-nav').addEventListener('click', () => switchCategory('nav'));
             document.getElementById('btn-safety').addEventListener('click', () => switchCategory('safety'));
-            document.getElementById('btn-handling').addEventListener('click', () => switchCategory('handling'));
-            document.getElementById('btn-law').addEventListener('click', () => switchCategory('law'));
+            document.getElementById('btn-english').addEventListener('click', () => switchCategory('english'));
             document.getElementById('btn-cargo').addEventListener('click', () => switchCategory('cargo'));
+            document.getElementById('btn-management').addEventListener('click', () => switchCategory('management'));
 
             document.getElementById('search-input').addEventListener('input', handleGlobalSearch);
 
