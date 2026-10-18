@@ -18,7 +18,7 @@
 
         <!-- 即時關鍵字搜尋框 -->
         <div class="mb-5">
-            <input type="text" id="search-input" placeholder="🔍 搜尋全站關鍵字、公式或條文（例如：Rule 15, MOB, 緯度, 通用緊急警報...）" 
+            <input type="text" id="search-input" placeholder="🔍 搜尋全站關鍵字、公式或條文（例如：Rule 15, MOB, 緯度...）" 
                    class="w-full p-3.5 text-sm bg-white border border-slate-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
         </div>
 
@@ -51,10 +51,12 @@
 
     <script>
         let currentCat = 'nav';
+        let currentNavSub = 'all';
         let currentFilter = 'all';
 
         function switchCategory(catKey) {
             currentCat = catKey;
+            currentNavSub = 'all';
             currentFilter = 'all'; 
             const searchInput = document.getElementById('search-input');
             if (searchInput) searchInput.value = '';
@@ -75,6 +77,11 @@
                 }
             });
 
+            renderCurrentView();
+        }
+
+        function setNavSub(subId) {
+            currentNavSub = subId;
             renderCurrentView();
         }
 
@@ -167,63 +174,95 @@
             const area = document.getElementById('content-area');
             if (!area) return;
 
-            let terms = data.terms || [];
-            let formulas = data.formulas || [];
-            let quizzes = data.quizzes || [];
-
-            if (searchQuery) {
-                terms = terms.filter(t => t.en.toLowerCase().includes(searchQuery) || t.zh.includes(searchQuery) || t.desc.includes(searchQuery));
-                formulas = formulas.filter(f => f.name.toLowerCase().includes(searchQuery) || f.expr.toLowerCase().includes(searchQuery) || f.desc.includes(searchQuery));
-                quizzes = quizzes.filter(q => q.q.toLowerCase().includes(searchQuery) || q.answer.includes(searchQuery));
+            let categories = data.categories || [];
+            if (currentNavSub !== 'all') {
+                categories = categories.filter(c => c.id === currentNavSub);
             }
 
-            let termsHTML = terms.map(t => `
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100">
-                    <div class="flex justify-between items-start">
-                        <h4 class="font-bold text-slate-900 text-sm">${t.zh}</h4>
-                        <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-0.5 rounded">${t.en}</span>
-                    </div>
-                    <p class="text-xs text-slate-600 mt-2 leading-relaxed">${t.desc}</p>
+            let subNavButtons = `
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <button onclick="window.setNavSub('all')" class="px-3 py-1.5 text-xs font-bold rounded-lg ${currentNavSub === 'all' ? 'bg-blue-600 text-white shadow' : 'bg-white text-slate-700 border border-slate-200'} transition">全部子分類</button>
+                    ${data.categories.map(c => `
+                        <button onclick="window.setNavSub('${c.id}')" class="px-3 py-1.5 text-xs font-bold rounded-lg ${currentNavSub === c.id ? 'bg-blue-600 text-white shadow' : 'bg-white text-slate-700 border border-slate-200'} transition">${c.name.split(' ')[0]}${c.name.split(' ')[1]}</button>
+                    `).join('')}
                 </div>
-            `).join('');
+            `;
 
-            let formulasHTML = formulas.map(f => `
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100">
-                    <h4 class="font-bold text-slate-900 text-sm">${f.name}</h4>
-                    <div class="my-2 p-2.5 bg-slate-900 text-emerald-400 font-mono text-xs rounded-lg">${f.expr}</div>
-                    <p class="text-xs text-slate-600 leading-relaxed">${f.desc}</p>
-                </div>
-            `).join('');
+            let contentHTML = categories.map(cat => {
+                let terms = cat.terms;
+                let formulas = cat.formulas;
 
-            let quizzesHTML = quizzes.map((q, idx) => `
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100">
-                    <p class="text-sm font-bold text-slate-900 mb-3">Q${idx+1}. ${q.q}</p>
-                    <div class="space-y-1.5 mb-3">
-                        ${q.options.map(opt => `<div class="text-xs text-slate-700 p-2 bg-slate-50 rounded-lg">${opt}</div>`).join('')}
+                if (searchQuery) {
+                    terms = terms.filter(t => t.en.toLowerCase().includes(searchQuery) || t.zh.includes(searchQuery) || t.desc.includes(searchQuery));
+                    formulas = formulas.filter(f => f.name.toLowerCase().includes(searchQuery) || f.expr.toLowerCase().includes(searchQuery) || f.desc.includes(searchQuery));
+                }
+
+                if (terms.length === 0 && formulas.length === 0 && searchQuery) return '';
+
+                return `
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 mb-6">
+                        <div class="border-b border-slate-100 pb-3 mb-4">
+                            <h3 class="font-extrabold text-blue-950 text-base">${cat.name}</h3>
+                            <p class="text-xs text-slate-500 mt-1">${cat.desc}</p>
+                        </div>
+
+                        ${terms.length > 0 ? `
+                            <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3">📖 核心專有名詞</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                                ${terms.map(t => `
+                                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                                        <div class="flex justify-between items-start">
+                                            <span class="font-bold text-slate-900 text-xs">${t.zh}</span>
+                                            <span class="text-[10px] font-mono bg-blue-100 text-blue-800 px-2 py-0.5 rounded">${t.en}</span>
+                                        </div>
+                                        <p class="text-[11px] text-slate-600 mt-1.5 leading-relaxed">${t.desc}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+
+                        ${formulas.length > 0 ? `
+                            <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3">📐 核心公式與計算</h4>
+                            <div class="grid grid-cols-1 gap-3">
+                                ${formulas.map(f => `
+                                    <div class="p-3 bg-slate-900 text-emerald-400 rounded-xl font-mono text-xs">
+                                        <div class="font-bold text-white text-xs mb-1">${f.name}</div>
+                                        <div class="bg-slate-950 p-2 rounded text-emerald-300">${f.expr}</div>
+                                        <p class="text-[11px] text-slate-300 font-sans mt-1.5 leading-relaxed">${f.desc}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        ` : ''}
                     </div>
-                    <button onclick="window.toggleAnswer(this)" data-answer="${q.answer}" class="w-full py-2 text-xs font-bold text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition">查看解答</button>
+                `;
+            }).join('');
+
+            let quizzes = data.quizzes || [];
+            let quizzesHTML = `
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 mt-6">
+                    <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider mb-4">📝 歷屆考題精選</h3>
+                    <div class="space-y-4">
+                        ${quizzes.map((q, idx) => `
+                            <div class="p-4 bg-slate-50 rounded-xl border border-slate-100">
+                                <p class="text-xs font-bold text-slate-900 mb-3">Q${idx+1}.${q.q}</p>
+                                <div class="space-y-1.5 mb-3">
+                                    ${q.options.map(opt => `<div class="text-[11px] text-slate-700 p-2 bg-white rounded-lg border border-slate-100">${opt}</div>`).join('')}
+                                </div>
+                                <button onclick="window.toggleAnswer(this)" data-answer="${q.answer}" class="w-full py-2 text-xs font-bold text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition">查看解答</button>
+                            </div>
+                        `).join('')}
+                    </div>
                 </div>
-            `).join('');
+            `;
 
             area.innerHTML = `
                 <div class="mb-4 border-l-4 border-blue-600 bg-blue-50 p-4 rounded-r-xl text-blue-950">
                     <h2 class="text-lg font-bold">${data.title}</h2>
-                    <p class="text-xs opacity-80 mt-1">涵蓋地文航海、天文航海、電航與 125+ 核心名詞及計算公式庫。</p>
+                    <p class="text-xs opacity-80 mt-1">點擊下方分類按鈕可快速切換地文、天文、電航與大圓航法子專區。</p>
                 </div>
-                <div class="space-y-6">
-                    <div>
-                        <h3 class="text-sm font-bold text-slate-900 mb-3 uppercase tracking-wider">📖 核心專有名詞 (${terms.length})</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">${termsHTML || '<p class="text-xs text-slate-400">無符合名詞</p>'}</div>
-                    </div>
-                    <div>
-                        <h3 class="text-sm font-bold text-slate-900 mb-3 uppercase tracking-wider">📐 核心公式與計算 (${formulas.length})</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">${formulasHTML || '<p class="text-xs text-slate-400">無符合公式</p>'}</div>
-                    </div>
-                    <div>
-                        <h3 class="text-sm font-bold text-slate-900 mb-3 uppercase tracking-wider">📝 歷屆考題精選 (${quizzes.length})</h3>
-                        <div class="space-y-3">${quizzesHTML || '<p class="text-xs text-slate-400">無符合考題</p>'}</div>
-                    </div>
-                </div>
+                ${subNavButtons}
+                ${contentHTML}
+                ${quizzesHTML}
             `;
         }
 
@@ -279,6 +318,7 @@
             btn.outerHTML = `<div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-sm text-emerald-800 font-semibold text-center leading-relaxed">正確答案：${answer}</div>`;
         };
 
+        window.setNavSub = setNavSub;
         window.setFilter = setFilter;
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -290,7 +330,6 @@
             document.getElementById('btn-colregs').addEventListener('click', () => switchCategory('colregs'));
             document.getElementById('btn-solas').addEventListener('click', () => switchCategory('solas'));
 
-            // 支援頂部即時搜尋框
             const searchInput = document.getElementById('search-input');
             if (searchInput) {
                 searchInput.addEventListener('input', (e) => {
