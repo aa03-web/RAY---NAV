@@ -52,10 +52,12 @@
     <script>
         let currentCat = 'nav';
         let currentFilter = 'all';
+        let currentNavTab = 'all'; // 航海學內部切換：all, terms, formulas, quizzes
 
         function switchCategory(catKey) {
             currentCat = catKey;
             currentFilter = 'all'; 
+            currentNavTab = 'all';
             const searchInput = document.getElementById('search-input');
             if (searchInput) searchInput.value = '';
 
@@ -80,6 +82,11 @@
 
         function setFilter(filterType) {
             currentFilter = filterType;
+            renderCurrentView();
+        }
+
+        function setNavTab(tabName) {
+            currentNavTab = tabName;
             renderCurrentView();
         }
 
@@ -177,6 +184,15 @@
                 quizzes = quizzes.filter(q => q.q.toLowerCase().includes(searchQuery) || q.answer.includes(searchQuery));
             }
 
+            let navTabsHTML = `
+                <div class="flex space-x-2 mb-4 overflow-x-auto pb-1">
+                    <button onclick="setNavTab('all')" class="px-3 py-1.5 text-xs font-bold rounded-lg ${currentNavTab === 'all' ? 'bg-blue-600 text-white shadow' : 'bg-white text-slate-700 border border-slate-200'} transition whitespace-nowrap">全部顯示</button>
+                    <button onclick="setNavTab('terms')" class="px-3 py-1.5 text-xs font-bold rounded-lg ${currentNavTab === 'terms' ? 'bg-blue-600 text-white shadow' : 'bg-white text-slate-700 border border-slate-200'} transition whitespace-nowrap">📖 核心專有名詞 (${terms.length})</button>
+                    <button onclick="setNavTab('formulas')" class="px-3 py-1.5 text-xs font-bold rounded-lg ${currentNavTab === 'formulas' ? 'bg-blue-600 text-white shadow' : 'bg-white text-slate-700 border border-slate-200'} transition whitespace-nowrap">📐 核心公式 (${formulas.length})</button>
+                    <button onclick="setNavTab('quizzes')" class="px-3 py-1.5 text-xs font-bold rounded-lg ${currentNavTab === 'quizzes' ? 'bg-blue-600 text-white shadow' : 'bg-white text-slate-700 border border-slate-200'} transition whitespace-nowrap">📝 歷屆考題 (${quizzes.length})</button>
+                </div>
+            `;
+
             let termsHTML = terms.map(t => `
                 <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100">
                     <div class="flex justify-between items-start">
@@ -205,25 +221,39 @@
                 </div>
             `).join('');
 
+            let sectionContent = '';
+            if (currentNavTab === 'all') {
+                sectionContent = `
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-900 mb-3 uppercase tracking-wider">📖 核心專有名詞 (${terms.length})</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">${termsHTML || '<p class="text-xs text-slate-400">無符合名詞</p>'}</div>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-900 mb-3 uppercase tracking-wider">📐 核心公式與計算 (${formulas.length})</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">${formulasHTML || '<p class="text-xs text-slate-400">無符合公式</p>'}</div>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-900 mb-3 uppercase tracking-wider">📝 歷屆考題精選 (${quizzes.length})</h3>
+                            <div class="space-y-3">${quizzesHTML || '<p class="text-xs text-slate-400">無符合考題</p>'}</div>
+                        </div>
+                    </div>
+                `;
+            } else if (currentNavTab === 'terms') {
+                sectionContent = `<div class="grid grid-cols-1 md:grid-cols-2 gap-3">${termsHTML || '<p class="text-xs text-slate-400">無符合名詞</p>'}</div>`;
+            } else if (currentNavTab === 'formulas') {
+                sectionContent = `<div class="grid grid-cols-1 md:grid-cols-2 gap-3">${formulasHTML || '<p class="text-xs text-slate-400">無符合公式</p>'}</div>`;
+            } else if (currentNavTab === 'quizzes') {
+                sectionContent = `<div class="space-y-3">${quizzesHTML || '<p class="text-xs text-slate-400">無符合考題</p>'}</div>`;
+            }
+
             area.innerHTML = `
                 <div class="mb-4 border-l-4 border-blue-600 bg-blue-50 p-4 rounded-r-xl text-blue-950">
                     <h2 class="text-lg font-bold">${data.title}</h2>
                     <p class="text-xs opacity-80 mt-1">涵蓋地文航海、天文航海、電航與 125+ 核心名詞及計算公式庫。</p>
                 </div>
-                <div class="space-y-6">
-                    <div>
-                        <h3 class="text-sm font-bold text-slate-900 mb-3 uppercase tracking-wider">📖 核心專有名詞 (${terms.length})</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">${termsHTML || '<p class="text-xs text-slate-400">無符合名詞</p>'}</div>
-                    </div>
-                    <div>
-                        <h3 class="text-sm font-bold text-slate-900 mb-3 uppercase tracking-wider">📐 核心公式與計算 (${formulas.length})</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">${formulasHTML || '<p class="text-xs text-slate-400">無符合公式</p>'}</div>
-                    </div>
-                    <div>
-                        <h3 class="text-sm font-bold text-slate-900 mb-3 uppercase tracking-wider">📝 歷屆考題精選 (${quizzes.length})</h3>
-                        <div class="space-y-3">${quizzesHTML || '<p class="text-xs text-slate-400">無符合考題</p>'}</div>
-                    </div>
-                </div>
+                ${navTabsHTML}
+                ${sectionContent}
             `;
         }
 
@@ -250,7 +280,6 @@
                 <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100">
                     <p class="text-sm font-bold text-slate-900 mb-3">Q${idx+1}. ${q.q}</p>
                     <div class="space-y-1.5 mb-3">
-                        ${q.options.app.map ? '' : ''}
                         ${q.options.map(opt => `<div class="text-xs text-slate-700 p-2 bg-slate-50 rounded-lg">${opt}</div>`).join('')}
                     </div>
                     <button onclick="toggleAnswer(this)" data-answer="${q.answer}" class="w-full py-2 text-xs font-bold text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition">查看解答</button>
