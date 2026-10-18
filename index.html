@@ -18,7 +18,7 @@
 
         <!-- 即時關鍵字搜尋框 -->
         <div class="mb-5">
-            <input type="text" id="search-input" placeholder="🔍 搜尋全站關鍵字、公式或條文（例如：Rule 15, MOB, 通用緊急警報...）" 
+            <input type="text" id="search-input" placeholder="🔍 搜尋全站關鍵字、公式或條文（例如：Rule 15, MOB, 緯度, 通用緊急警報...）" 
                    class="w-full p-3.5 text-sm bg-white border border-slate-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
         </div>
 
@@ -83,25 +83,33 @@
             renderCurrentView();
         }
 
-        function renderCurrentView() {
+        function renderCurrentView(searchQuery = '') {
             if (!window.db) return;
 
             if (currentCat === 'colregs') {
                 let rules = window.db.colregs || [];
-                if (currentFilter === 'important') rules = rules.filter(r => r.level === 'important');
-                if (currentFilter === 'secondary') rules = rules.filter(r => r.level === 'secondary');
+                if (searchQuery) {
+                    rules = rules.filter(r => r.rule.toLowerCase().includes(searchQuery) || r.title.toLowerCase().includes(searchQuery) || r.zh.includes(searchQuery));
+                } else {
+                    if (currentFilter === 'important') rules = rules.filter(r => r.level === 'important');
+                    if (currentFilter === 'secondary') rules = rules.filter(r => r.level === 'secondary');
+                }
                 renderRuleList(rules, "1972 年國際海上避碰規則 (COLREGs) 中英文對照庫", "amber");
             } else if (currentCat === 'solas') {
                 let rules = window.db.solas || [];
-                if (currentFilter === 'important') rules = rules.filter(r => r.level === 'important');
-                if (currentFilter === 'secondary') rules = rules.filter(r => r.level === 'secondary');
+                if (searchQuery) {
+                    rules = rules.filter(r => r.rule.toLowerCase().includes(searchQuery) || r.title.toLowerCase().includes(searchQuery) || r.zh.includes(searchQuery));
+                } else {
+                    if (currentFilter === 'important') rules = rules.filter(r => r.level === 'important');
+                    if (currentFilter === 'secondary') rules = rules.filter(r => r.level === 'secondary');
+                }
                 renderRuleList(rules, "SOLAS 國際海上人命安全公約 - 應急警報與鳴笛規範庫", "emerald");
             } else if (window.db[currentCat]) {
                 const activeData = window.db[currentCat];
                 if (currentCat === 'nav') {
-                    renderNavData(activeData);
+                    renderNavData(activeData, searchQuery);
                 } else {
-                    renderData(activeData.terms || [], activeData.quizzes || [], activeData.title || '');
+                    renderData(activeData.terms || [], activeData.quizzes || [], activeData.title || '', searchQuery);
                 }
             }
         }
@@ -155,15 +163,115 @@
             `;
         }
 
-        function renderNavData(data) {
-            // 保留航海學渲染
+        function renderNavData(data, searchQuery = '') {
             const area = document.getElementById('content-area');
             if (!area) return;
-            // (略過重複的 nav render code，確保與前次一致即可)
+
+            let terms = data.terms || [];
+            let formulas = data.formulas || [];
+            let quizzes = data.quizzes || [];
+
+            if (searchQuery) {
+                terms = terms.filter(t => t.en.toLowerCase().includes(searchQuery) || t.zh.includes(searchQuery) || t.desc.includes(searchQuery));
+                formulas = formulas.filter(f => f.name.toLowerCase().includes(searchQuery) || f.expr.toLowerCase().includes(searchQuery) || f.desc.includes(searchQuery));
+                quizzes = quizzes.filter(q => q.q.toLowerCase().includes(searchQuery) || q.answer.includes(searchQuery));
+            }
+
+            let termsHTML = terms.map(t => `
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-slate-900 text-sm">${t.zh}</h4>
+                        <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-0.5 rounded">${t.en}</span>
+                    </div>
+                    <p class="text-xs text-slate-600 mt-2 leading-relaxed">${t.desc}</p>
+                </div>
+            `).join('');
+
+            let formulasHTML = formulas.map(f => `
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+                    <h4 class="font-bold text-slate-900 text-sm">${f.name}</h4>
+                    <div class="my-2 p-2.5 bg-slate-900 text-emerald-400 font-mono text-xs rounded-lg">${f.expr}</div>
+                    <p class="text-xs text-slate-600 leading-relaxed">${f.desc}</p>
+                </div>
+            `).join('');
+
+            let quizzesHTML = quizzes.map((q, idx) => `
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+                    <p class="text-sm font-bold text-slate-900 mb-3">Q${idx+1}. ${q.q}</p>
+                    <div class="space-y-1.5 mb-3">
+                        ${q.options.map(opt => `<div class="text-xs text-slate-700 p-2 bg-slate-50 rounded-lg">${opt}</div>`).join('')}
+                    </div>
+                    <button onclick="window.toggleAnswer(this)" data-answer="${q.answer}" class="w-full py-2 text-xs font-bold text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition">查看解答</button>
+                </div>
+            `).join('');
+
+            area.innerHTML = `
+                <div class="mb-4 border-l-4 border-blue-600 bg-blue-50 p-4 rounded-r-xl text-blue-950">
+                    <h2 class="text-lg font-bold">${data.title}</h2>
+                    <p class="text-xs opacity-80 mt-1">涵蓋地文航海、天文航海、電航與 125+ 核心名詞及計算公式庫。</p>
+                </div>
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-900 mb-3 uppercase tracking-wider">📖 核心專有名詞 (${terms.length})</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">${termsHTML || '<p class="text-xs text-slate-400">無符合名詞</p>'}</div>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-900 mb-3 uppercase tracking-wider">📐 核心公式與計算 (${formulas.length})</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">${formulasHTML || '<p class="text-xs text-slate-400">無符合公式</p>'}</div>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-900 mb-3 uppercase tracking-wider">📝 歷屆考題精選 (${quizzes.length})</h3>
+                        <div class="space-y-3">${quizzesHTML || '<p class="text-xs text-slate-400">無符合考題</p>'}</div>
+                    </div>
+                </div>
+            `;
         }
 
-        function renderData(terms, quizzes, title) {
-            // 其他科目渲染
+        function renderData(terms, quizzes, title, searchQuery = '') {
+            const area = document.getElementById('content-area');
+            if (!area) return;
+
+            if (searchQuery) {
+                terms = terms.filter(t => t.en.toLowerCase().includes(searchQuery) || t.zh.includes(searchQuery) || t.desc.includes(searchQuery));
+                quizzes = quizzes.filter(q => q.q.toLowerCase().includes(searchQuery) || q.answer.includes(searchQuery));
+            }
+
+            let termsHTML = terms.map(t => `
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-slate-900 text-sm">${t.zh}</h4>
+                        <span class="text-xs font-mono bg-blue-50 text-blue-700 px-2 py-0.5 rounded">${t.en}</span>
+                    </div>
+                    <p class="text-xs text-slate-600 mt-2 leading-relaxed">${t.desc}</p>
+                </div>
+            `).join('');
+
+            let quizzesHTML = quizzes.map((q, idx) => `
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+                    <p class="text-sm font-bold text-slate-900 mb-3">Q${idx+1}. ${q.q}</p>
+                    <div class="space-y-1.5 mb-3">
+                        ${q.options.map(opt => `<div class="text-xs text-slate-700 p-2 bg-slate-50 rounded-lg">${opt}</div>`).join('')}
+                    </div>
+                    <button onclick="window.toggleAnswer(this)" data-answer="${q.answer}" class="w-full py-2 text-xs font-bold text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition">查看解答</button>
+                </div>
+            `).join('');
+
+            area.innerHTML = `
+                <div class="mb-4 border-l-4 border-blue-600 bg-blue-50 p-4 rounded-r-xl text-blue-950">
+                    <h2 class="text-lg font-bold">${title}</h2>
+                    <p class="text-xs opacity-80 mt-1">國考高頻專有名詞與實務應變題庫。</p>
+                </div>
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-900 mb-3 uppercase tracking-wider">📖 核心專有名詞與應變信號 (${terms.length})</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">${termsHTML || '<p class="text-xs text-slate-400">無符合名詞</p>'}</div>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-900 mb-3 uppercase tracking-wider">📝 歷屆考題精選 (${quizzes.length})</h3>
+                        <div class="space-y-3">${quizzesHTML || '<p class="text-xs text-slate-400">無符合考題</p>'}</div>
+                    </div>
+                </div>
+            `;
         }
 
         window.toggleAnswer = function(btn) {
@@ -181,6 +289,15 @@
             document.getElementById('btn-management').addEventListener('click', () => switchCategory('management'));
             document.getElementById('btn-colregs').addEventListener('click', () => switchCategory('colregs'));
             document.getElementById('btn-solas').addEventListener('click', () => switchCategory('solas'));
+
+            // 支援頂部即時搜尋框
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    const query = e.target.value.trim().toLowerCase();
+                    renderCurrentView(query);
+                });
+            }
 
             switchCategory('nav');
         });
