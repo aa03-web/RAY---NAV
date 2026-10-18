@@ -1,17 +1,75 @@
 window.colregsData = [
-    { rule: "Rule 1", title: "Application / 適用範圍", level: "secondary", en: "These Rules shall apply to all vessels upon the high seas and in all waters connected therewith navigable by seagoing vessels.", zh: "本規則適用於公海及公海所連通可供海航船舶航行之一切水域中之一切船舶。" },
-    { rule: "Rule 2", title: "Responsibility / 責任", level: "important", en: "Nothing in these Rules shall exonerate any vessel, or the owner, master or crew thereof, from the consequences of any neglect to comply with these Rules or of the neglect of any precaution which may be required by the ordinary practice of seamen, or by the special circumstances of the case.", zh: "本規則之各項規定，均不得免除任何船舶，或其船東、船長、船員，因疏忽遵守本規則，或疏忽良好船員通常經驗或當時特殊情況所要求之任何預防措施，所生之任何後果責任。" },
-    { rule: "Rule 3", title: "General Definitions / 一般定義", level: "secondary", en: "'Vessel' includes every description of water craft, including non-displacement craft, WIG craft and seaplanes, used or capable of being used as a means of transportation on water.", zh: "『船舶』一詞，包括用作或能用作水上運輸工具之一切水上機具，含無排水量船艇、地效翼船及水上飛機。" },
-    { rule: "Rule 5", title: "Look-out / 瞭望", level: "important", en: "Every vessel shall at all times maintain a proper look-out by sight and hearing as well as by all available means appropriate in the prevailing circumstances and conditions so as to make a full appraisal of the situation and of the risk of collision.", zh: "每一船舶在任何時間，均應利用視覺、聽覺以及適合當時環境與情況之一切可用方法，保持適當之瞭望，俾對局勢及碰撞危險作充分之估計。" },
-    { rule: "Rule 6", title: "Safe Speed / 安全航速", level: "important", en: "Every vessel shall at all times proceed at a safe speed so that she can take proper and effective action to avoid collision and be stopped within a distance appropriate to the prevailing circumstances and conditions.", zh: "每一船舶在任何時間，均應以安全航速航行，俾能採取適當而有效之避碰行動，並能在適合當時環境與情況之適當距離內將船停住。" },
-    { rule: "Rule 7", title: "Risk of Collision / 碰撞危險", level: "important", en: "Every vessel shall use all available means appropriate to the prevailing circumstances and conditions to determine if risk of collision exists. If there is any doubt such risk shall be deemed to exist.", zh: "每一船舶應利用適合當時環境與情況之一切可用方法，以判斷是否存在碰撞危險。如有任何疑慮，應視為該危險存在。" },
-    { rule: "Rule 8", title: "Action to Avoid Collision / 避碰行動", level: "important", en: "Any action taken to avoid collision shall be taken in accordance with the Rules of this Part and shall, if the circumstances of the case admit, be positive, made in ample time and with due regard to the observance of good seamanship.", zh: "為避碰所採取之任何行動，應依本章規定行之；如情況許可，應極明確，及早進行，並充分遵循良好的船員經驗。" },
-    { rule: "Rule 10", title: "Traffic Separation Schemes / 分道航行制", level: "important", en: "This Rule applies to traffic separation schemes adopted by the Organization and does not relieve any vessel of her obligation under any other rule. A vessel navigating in or near traffic lanes shall use general traffic lane direction.", zh: "本規則適用於經本組織所採納之分道航行制，並不免除任何船舶依其他規則所應盡之義務。在分道航行制內或其附近航行之船舶，應使用一般通航線方向。" },
-    { rule: "Rule 13", title: "Overtaking / 追越", level: "important", en: "Notwithstanding anything contained in the Rules of Part B, Sections I and II, any vessel overtaking any other shall keep out of the way of the vessel being overtaken.", zh: "不論本章第一單元及第二單元各條如何規定，任何船舶在追越他船時，均應避讓被追越之船舶。" },
-    { rule: "Rule 14", title: "Head-on Situation / 迎頭相遇局面", level: "important", en: "When two power-driven vessels are meeting on reciprocal or nearly reciprocal courses so as to involve risk of collision each shall alter her course to starboard so that each shall pass on the port side of the other.", zh: "當兩動力船舶在相近或相對航向上相遇致有碰撞危險時，雙方均應向右轉向，俾使各從他船之左舷通過。" },
-    { rule: "Rule 15", title: "Crossing Situation / 交叉相遇局面", level: "important", en: "When two power-driven vessels are crossing so as to involve risk of collision, the vessel which has the other on her own starboard side shall keep out of the way and shall, if the circumstances of the case admit, avoid crossing ahead of the other vessel.", zh: "當兩動力船舶交叉相遇致有碰撞危險時，他船在其右舷者，應避讓他船，如情況許可，並應避免橫越他船之船首。" },
-    { rule: "Rule 18", title: "Responsibilities Between Vessels / 船舶間之責任劃分", level: "important", en: "A power-driven vessel underway shall keep out of the way of: a vessel not under command; a vessel restricted in her ability to maneuver; a vessel engaged in fishing; a sailing vessel.", zh: "航行中之動力船舶，應避讓：操縱失靈船、限制操縱能力船、從事捕魚之船舶、帆船。" },
-    { rule: "Rule 19", title: "Conduct of Vessels in Restricted Visibility / 限制顯視度下之船舶航行", level: "important", en: "This Rule applies to vessels not in sight of one another when navigating in or near an area of restricted visibility. Every vessel shall proceed at a safe speed adapted to the prevailing circumstances and conditions of restricted visibility.", zh: "本條適用於在限制顯視度區域內或其附近航行而互看不見之船舶。每一船舶應依當時限制顯視度之環境與情況，以安全航速航行。" },
-    { rule: "Rule 27", title: "Vessels Not Under Command or Restricted in Ability to Maneuver / 操縱失靈與限制操縱船", level: "secondary", en: "A vessel not under command shall exhibit: two all-round red lights in a vertical line where they can best be seen; two balls or similar shapes in a vertical line.", zh: "操縱失靈船應顯示：垂直線上能見度最佳處之全周紅燈兩盞；垂直線上能見度最佳處之球體或類似形體兩個。" },
-    { rule: "Rule 35", title: "Sound Signals in Restricted Visibility / 限制顯視度之聲號", level: "secondary", en: "In or near an area of restricted visibility, whether by day or by night, signals shall be used as follows: A power-driven vessel making way through the water shall sound at intervals of not more than 2 minutes one prolonged blast.", zh: "在限制顯視度區域內或其附近，不論日夜，聲號之使用規定如下：對水前進中之動力船舶，應每隔不超過 2 分鐘鳴放長聲一響。" }
+    { 
+        rule: "Rule 5", 
+        title: "瞭望 (Look-out)", 
+        level: "important",
+        zh: "各船應隨時使用視覺、聽覺以及適合當時環境與情況之所有有效方法，保持適當之瞭望（視覺、聽覺、電子設備），以便對情勢及碰撞危險作全面評估。",
+        en: "Every vessel shall at all times maintain a proper look-out by sight and hearing as well as by all available means appropriate in the prevailing circumstances and conditions so as to make a full appraisal of the situation and of the risk of collision."
+    },
+    { 
+        rule: "Rule 6", 
+        title: "安全航速 (Safe Speed)", 
+        level: "important",
+        zh: "各船於任何時候均應使用安全航速推進，以便能採取有效且適當之避碰行動，並能在適合當時環境與情況之距離內將船停住。",
+        en: "Every vessel shall at all times proceed at a safe speed so that she can take proper and effective action to avoid collision and be stopped within a distance appropriate to the prevailing circumstances and conditions."
+    },
+    { 
+        rule: "Rule 7", 
+        title: "碰撞危險 (Risk of Collision)", 
+        level: "important",
+        zh: "各船應使用一切可用方法判定是否有碰撞危險。若有任何懷疑，即應視為存在。如來船之羅經方位無明顯變化，則應視此種危險已存在。",
+        en: "Every vessel shall use all available means appropriate to the prevailing circumstances and conditions to determine if risk of collision exists. If there is any doubt such risk shall be deemed to exist."
+    },
+    { 
+        rule: "Rule 8", 
+        title: "避免碰撞之行動 (Action to Avoid Collision)", 
+        level: "important",
+        zh: "為避免碰撞所採取之任何行動，如情況許可，應當機立斷，並採用大刀闊斧之方式行之。航向或航速之任何改變，如情況許可，應足以使對方顯著察覺。",
+        en: "Any action taken to avoid collision shall be positive, made in ample time and with due regard to the observance of good seamanship. Any alteration of course and/or speed to avoid collision shall, if the circumstances of the case admit, be large enough to be readily apparent to another vessel observing visually or by radar."
+    },
+    { 
+        rule: "Rule 13", 
+        title: "追越 (Overtaking)", 
+        level: "important",
+        zh: "任何船舶追越另一船時，應隨時給被追越船讓路。凡船舶自被追越船正橫後大於 22.5 度之方向駛近該船時，即為追越船。",
+        en: "Notwithstanding anything contained in the Rules of Part B, Sections I and II any vessel overtaking any other shall keep out of the way of the vessel being overtaken. A vessel shall be deemed to be overtaking when coming up with another vessel from a direction more than 22..5 degrees abaft her beam."
+    },
+    { 
+        rule: "Rule 14", 
+        title: "迎面相踫情況 (Head-on Situation)", 
+        level: "important",
+        zh: "兩艘動力船以相反或接近相反之航向迎面相遯，致有碰撞危險時，兩船均應向右轉，使各該船從對方之左舷通過。",
+        en: "When two power-driven vessels are meeting on reciprocal or nearly reciprocal courses so as to involve risk of collision each shall alter her course to starboard so that each shall pass on the port side of the other."
+      },
+    { 
+        rule: "Rule 15", 
+        title: "互越交叉情況 (Crossing Situation)", 
+        level: "important",
+        zh: "兩艘動力船交叉相交致有碰撞危險時，有另一船在自己右舷者，應讓路予該船，如情況許可，並應避免橫越該船前方。",
+        en: "When two power-driven vessels are crossing so as to involve risk of collision, the vessel which has the other on her own starboard side shall keep out of the way and shall, if the circumstances of the case admit, avoid crossing ahead of the other vessel."
+    },
+    { 
+        rule: "Rule 34", 
+        title: "運轉與警告信號 (Manoeuvring and Warning Signals)", 
+        level: "important",
+        zh: "【互見時之動態與警告信號】\n" +
+            "1. 轉向信號：向右轉鳴放 1 短聲(·)；向左轉鳴放 2 短聲(··)；開倒車鳴放 3 短聲(···)。\n" +
+            "2. 狹窄水道追越信號：擬在右舷追越鳴放 2 長 1 短(——·)；擬在左舷追越鳴放 2 長 2 短(——··)。被追越船同意時鳴放 1長1短1長1短(—·—·)。\n" +
+            "3. 疑慮信號：互見接近時若對對方意圖存疑或不解，應立即鳴放 至少 5 聲短而急促笛聲(·····)。\n" +
+            "4. 盲彎信號：接近可能被障礙物遮蔽之水道彎道時，應鳴放 1 長聲(—)。",
+        en: "Manoeuvring and warning signals: (a) When power-driven vessels are in sight of one another and meeting or crossing at a distance within half a mile of each other, each vessel, when manoeuvring... shall indicate the manoeuvre by whistle signals: - one short blast to mean 'I am altering my course to starboard'; - two short blasts to mean 'I am altering my course to port'; - three short blasts to mean 'I am operating astern propulsion'."
+    },
+    { 
+        rule: "Rule 35", 
+        title: "能見度受限制時之音響信號 (Sound Signals in Restricted Visibility)", 
+        level: "important",
+        zh: "【能見度不良時之音響信號（每隔不超過 2 分鐘）】\n" +
+            "1. 動態動力船（前進中）：每 2 分鐘鳴放 1 長聲(—)。\n" +
+            "2. 動態動力船（在水中停止、對水不動）：每 2 分鐘連續鳴放 2 長聲(——)。\n" +
+            "3. 特殊船舶（操縱失靈、限操、吃水受限制、帆船、捕魚、拖帶）：每 2 分鐘鳴放 3 聲組合號笛（1長2短，—··）。\n" +
+            "4. 被拖船（最後一艘）：在受拖船號笛後，每 2 分鐘鳴放 4 聲組合號笛（1長3短，—···）。\n" +
+            "5. 錨泊船：每 1 分鐘急敲號鐘約 5 秒。（100公尺以上船前部敲鐘、後部敲鑼）。可在鐘聲前後加鳴 3 聲組合號笛（1短1長1短，·—·）以警告來船。\n" +
+            "6. 擱淺船：敲擊與錨泊船相同的鐘（及鑼）聲，並在鐘聲前後各加上 3 聲獨立清晰短響（噹—噹—噹）。",
+        en: "In or near an area of restricted visibility, whether by day or by night, signals shall be used as follows: (a) A power-driven vessel making way through the water shall sound at intervals of not more than 2 minutes one prolonged blast."
+    }
 ];
